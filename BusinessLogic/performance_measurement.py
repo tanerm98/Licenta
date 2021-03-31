@@ -21,7 +21,7 @@ def download_file_from_google_drive():
     drive_service = build('drive', 'v3', credentials=credentials)
 
     request = drive_service.files().get_media(fileId=file_id)
-    fh = io.BytesIO()
+    fh = io.FileIO("app.zip", 'wb')
     downloader = MediaIoBaseDownload(fh, request)
     done = False
     while done is False:
