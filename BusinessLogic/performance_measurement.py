@@ -1,18 +1,13 @@
 #!/usr/local/bin/python3
 
-import googleapiclient, httplib2, oauth2client
-from googleapiclient import discovery
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 from google.oauth2 import service_account
-from httplib2 import Http
-from oauth2client import file, client, tools
 import io
 import json
+import subprocess
 
-def download_file_from_google_drive():
-    file_id = '1OR2c_ZOVyiz1SwSYoEP2FzuvL9Ldphrk'
-
+def download_file_from_google_drive(file_id):
     with open('gdrive_api_service_credentials.json') as json_file:
         credz = json.load(json_file)
 
@@ -28,4 +23,17 @@ def download_file_from_google_drive():
         status, done = downloader.next_chunk()
         print("Download %d%%." % int(status.progress() * 100))
 
-download_file_from_google_drive()
+def comment_on_PR(auth_token, message, repo_owner, repo_name, pr_number):
+    command = "curl -s -H "
+    command += "\"Authorization: token {TOKEN}\" ".format(TOKEN=auth_token)
+    command += "-X POST -d "
+    command += "'{BODY}' ".format(BODY=str({"body": message}).replace("'", "\""))
+    command += "\"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/issues/{PR_NUMBER}/comments\"".format(
+        REPO_OWNER=repo_owner,
+        REPO_NAME=repo_name,
+        PR_NUMBER=pr_number
+    )
+    subprocess.Popen(command, shell=True).wait()
+
+# download_file_from_google_drive('1OR2c_ZOVyiz1SwSYoEP2FzuvL9Ldphrk')
+# comment_on_PR("", "Test de comment", "tanerm98", "Licenta", 1)

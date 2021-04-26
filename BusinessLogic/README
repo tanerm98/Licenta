@@ -1,7 +1,7 @@
 
     Use `python3` for these scripts.
 
-    Run:
+    Venv:
     ```
         # pwd = Licenta/BusinessLogic
         python3 -m venv venv
@@ -9,3 +9,5 @@
         pip3 install -r requirements.txt
         pip3 install -U pip google-api-python-client
     ```
+
+    Github Token: "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"
