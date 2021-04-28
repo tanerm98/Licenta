@@ -106,3 +106,5 @@ dist
 # added by developer
 .idea
 */**/venv/**/*
+
+*/**/*.zip
