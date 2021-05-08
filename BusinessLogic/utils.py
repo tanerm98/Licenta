@@ -1,6 +1,5 @@
 #!/usr/local/bin/python3
 
-
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 from google.oauth2 import service_account
@@ -14,18 +13,21 @@ import logging
 logging.getLogger().setLevel(logging.INFO)
 
 
-def download_file_from_google_drive(file_id, file_name):
+def download_file_from_google_drive(google_drive_credentials_json_file, file_id, file_name):
     """
     Download file from Google Drive;
     Used for downloading the tested apps.
+    :param google_drive_credentials_json_file: path of JSON file with credentials for Google Drive API
     :param file_id: ID of file from Google Drive
+    :param file_name: name of file from Google Drive
     :return: True - if download successful; False - if download failed.
 
-    Usage: download_file_from_google_drive('1OR2c_ZOVyiz1SwSYoEP2FzuvL9Ldphrk', 'app.zip')
+    Usage: download_file_from_google_drive("gdrive_api_service_credentials.json", "<file_id>", "app.zip")
     """
+    logging.info("Downloading file from Google Drive...")
+
     try:
-        logging.info("Downloading file from Google Drive...")
-        with open('gdrive_api_service_credentials.json') as json_file:
+        with open(google_drive_credentials_json_file) as json_file:
             credz = json.load(json_file)
 
         credentials = service_account.Credentials.from_service_account_info(credz)
@@ -52,10 +54,12 @@ def unzip_archive(archive_name):
     Unzips archive with APP file.
     :param archive_name: name of archive downloaded from Google Drive.
     :return: APP file name if successful; None if failure.
+
     Usage: unzip_archive("app.zip")
     """
+    logging.info("Extracting archive '{ARCHIVE}'...".format(ARCHIVE=archive_name))
+
     try:
-        logging.info("Extracting archive '{ARCHIVE}'...".format(ARCHIVE=archive_name))
         with zipfile.ZipFile(archive_name, 'r') as zip_ref:
             zip_ref.extractall(os.getcwd())
             app_name = str(zip_ref.namelist()[0])[:-1]
@@ -78,15 +82,15 @@ def comment_on_pr(auth_token, comment, repo_owner, repo_name, pr_number):
     :param pr_number: pull-request ID
     :return: True - if comment successful; False - if comment failed.
 
-    Usage: comment_on_pr("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", "Test de comment 1", "tanerm98", "Licenta", 1)
+    Usage: comment_on_pr("<auth_token>", "Test de comment 1", "tanerm98", "Licenta", 1)
     """
-    try:
-        logging.info("Posting comment '{COMMENT}' on PR '{PR}' for repository '{REPO}'...".format(
-            COMMENT=comment,
-            PR=pr_number,
-            REPO=repo_name)
-        )
+    logging.info("Posting comment '{COMMENT}' on PR '{PR}' for repository '{REPO}'...".format(
+        COMMENT=comment,
+        PR=pr_number,
+        REPO=repo_name)
+    )
 
+    try:
         command = "curl -s -H "
         command += "\"Authorization: token {TOKEN}\" ".format(TOKEN=auth_token)
         command += "-X POST -d "

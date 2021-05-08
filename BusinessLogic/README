@@ -1,16 +1,23 @@
 
     Use `python3` for these scripts.
 
-    Venv:
+    Usage:
     ```
         # pwd = Licenta/BusinessLogic
-        python3 -m venv venv
-        source venv/bin/activate
-        pip3 install -r requirements.txt
-        pip3 install -U pip google-api-python-client
+
+        # Venv
+            python3 -m venv venv
+            source venv/bin/activate
+            pip3 install -r requirements.txt
+            pip3 install -U pip google-api-python-client
+
+        # Run script
+            python3 measure_performance.py \
+                --bundle_id TODO \
+                --app_name TODO \
+                --app_path TODO \
+                --repo_github_token TODO \
+                --repo_owner TODO \
+                --repo_name TODO \
+                --pr_number TODO
     ```
-
-    Github Token: "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"
-
-    # xcrun simctl spawn "iPhone 11" log stream | grep "Fitbit.Concentration"
-    # top -pid 1740

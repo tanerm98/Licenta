@@ -1,0 +1,45 @@
+
+Script usage:
+    python3 measure_performance.py
+        --bundle_id Fitbit.Concentration
+        --app_name Concentration.app
+        --app_path Concentration.app
+        --repo_github_token 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
+        --repo_owner tanerm98
+        --repo_name Licenta
+        --pr_number 1
+
+Utils usage:
+    Download file from Google Drive
+        # download_file_from_google_drive(
+            'gdrive_api_service_credentials.json',
+            '1OR2c_ZOVyiz1SwSYoEP2FzuvL9Ldphrk',
+            'app.zip'
+        )
+    Unzip archive
+        # unzip_archive(
+            "app.zip"
+        )
+    Comment on Github PR:
+        # comment_on_pr(
+            "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",
+            "Test de comment 1",
+            "tanerm98",
+            "Licenta",
+            1
+        )
+
+Bash command for getting logs:
+    # xcrun simctl spawn "iPhone 11" log stream | grep "Fitbit.Concentration"
+Bash command for getting used memory:
+    # top -pid 1740
+
+GitHub token:
+    "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"
+
+app_name = Concentration.app
+bundle_id = Fitbit.Concentration
+start_log = Received request to open "Fitbit.Concentration"
+sleep_log = Sleeping
+exit_log = [Performance Testing] Application finished launching!
+memory_log = [Performance Testing] RAM memory used
