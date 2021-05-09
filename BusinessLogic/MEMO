@@ -1,13 +1,16 @@
 
 Script usage:
-    python3 measure_performance.py
-        --bundle_id Fitbit.Concentration
-        --app_name Concentration.app
-        --app_path Concentration.app
-        --repo_github_token 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
-        --repo_owner tanerm98
-        --repo_name Licenta
+    python3 measure_performance.py \
+        --bundle_id Fitbit.Concentration \
+        --app_name Concentration.app \
+        --app_path Concentration.app \
+        --repo_github_token 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 \
+        --repo_owner tanerm98 \
+        --repo_name Licenta \
         --pr_number 1
+
+    python3 measure_performance.py --bundle_id Fitbit.Concentration --app_name Concentration.app --app_path Concentration.app --repo_github_token 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 --repo_owner tanerm98 --repo_name Licenta --pr_number 1 --file_id 1OR2c_ZOVyiz1SwSYoEP2FzuvL9Ldphrk
+    python3 measure_performance.py --bundle_id Fitbit.Concentration --app_name Concentration.app --app_path Concentration.app --repo_github_token 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 --repo_owner tanerm98 --repo_name Licenta --pr_number 1 --file_id 1OR2c_ZOVyiz1SwSYoEP2FzuvL9Ldphrk --device 'iPhone 11' --launch_type COLD
 
 Utils usage:
     Download file from Google Drive
