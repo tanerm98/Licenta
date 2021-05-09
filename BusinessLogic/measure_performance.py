@@ -18,6 +18,13 @@ APP_ARCHIVE = "app.zip"
 
 TIMEOUT = 10
 
+LAUNCHES = "LAUNCHES"
+DEVICE = "DEVICE"
+LAUNCH_TYPE = "LAUNCH_TYPE"
+APP_SIZE = "APP_SIZE"
+LAUNCH_DURATION = "LAUNCH_DURATION"
+MEMORY_USAGE = "MEMORY_USAGE"
+
 
 def parse_args():
     """
@@ -57,7 +64,8 @@ def parse_args():
     args = parser.parse_args()
 
     if args.app_path is None and args.file_id is None:
-        logging.error("No APP location provided! Will check if app is already installed on device.")
+        logging.error("No APP location provided!")
+        raise Exception("No APP location provided!")
 
     if args.app_path is not None and args.file_id is not None:
         logging.error("Both local path APP and Google Drive file ID provided! Will try to use local path first.")
@@ -168,7 +176,6 @@ def get_app(args):
     :return: app path. If not found, returns None.
     """
     logging.info("Getting the APP...")
-    app_path = None
 
     try:
         if args.app_path is not None and os.path.exists(args.app_path):
@@ -183,15 +190,42 @@ def get_app(args):
 
         else:
             logging.error("No valid app path provided.")
+            return None
 
-        if app_path is not None:
-            logging.info("App retrieved successfuly: {PATH}".format(PATH=app_path))
-
+        logging.info("App retrieved successfuly: {PATH}".format(PATH=app_path))
         return app_path
 
     except Exception as e:
         logging.error("Error getting the app: {ERROR}.".format(ERROR=e))
         return None
+
+
+def compute_app_size(app_path):
+    """
+    Computes the app size in MB
+    :param app_path: path to the APP file
+    :return: size in MB or None if error occurred
+    """
+    logging.info("Computing size of application...")
+
+    try:
+        p = subprocess.Popen(
+            "du -shm {PATH}".format(PATH=app_path),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
+            shell=True
+        )
+        output = p.communicate()[0]
+        app_size = int(str(output.strip()).split("\t")[0])
+        logging.info("Size of application: [{SIZE} MB]".format(SIZE=app_size))
+
+    except Exception as e:
+        logging.error("Error computing the app size: {ERROR}.".format(ERROR=e))
+        return None
+
+    logging.info("App size computed successfuly!")
+    return app_size
 
 
 def install_app(simulator_name, app_path):
@@ -223,22 +257,29 @@ def launch_app(simulator_name, bundle_id):
     Launches the tested app on the simulator
     :param simulator_name: the simulator name to launch the app on (ex: iPhone 8, iPhone 11)
     :param bundle_id: bundle ID of the iOS app file
-    :return: True if everything worked fine - False instead
+    :return: PID of launched application - None if something fails
     """
     logging.info("Launching app {BUNDLE_ID} on simulator {SIMULATOR}...".format(BUNDLE_ID=bundle_id, SIMULATOR=simulator_name))
 
     try:
-        subprocess.Popen(
+        p = subprocess.Popen(
             "xcrun simctl launch '{SIMULATOR}' '{BUNDLE_ID}'".format(SIMULATOR=simulator_name, BUNDLE_ID=bundle_id),
-            shell=True
-        ).wait()
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True
+        )
+        output = p.communicate()[0].rstrip()
+
+        app_pid = int(str(output.strip()).split(" ")[1])
+        logging.info("PID of launched application: [{PID}]".format(PID=app_pid))
 
     except Exception as e:
         logging.error("Launching the APP failed with error '{ERROR}'".format(ERROR=e))
-        return False
+        return None
 
-    logging.info("Application launched!")
-    return True
+    logging.info("Application launched successfuly!")
+    return app_pid
 
 
 def terminate_app(simulator_name, bundle_id):
@@ -264,25 +305,81 @@ def terminate_app(simulator_name, bundle_id):
     return True
 
 
+def compute_memory_usage(app_pid):
+    """
+    Computes memory usage of process
+    :param app_pid: PID of process
+    :return: memory usage in MB or None if error occurred
+    """
+    logging.info("Computing memory usage...")
+
+    try:
+        p = subprocess.Popen(
+            "top -l 1 -pid {PID}".format(PID=app_pid),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
+            shell=True
+        )
+        output = p.communicate()[0].strip()
+
+        memory_usage = round(float(str(list(filter(('').__ne__, str(output.splitlines()[-1]).split(" ")))[7])[:-1]) / 1024.00, 2)
+        logging.info("Memory usage: [{MEMORY} MB]".format(MEMORY=memory_usage))
+
+    except Exception as e:
+        logging.error("Computing the memory usage failed with error '{ERROR}'".format(ERROR=e))
+        return None
+
+    logging.info("Memory usage computed successfuly!")
+    return memory_usage
+
+
 def run_launches(simulator_name, launch_type, launch_nr, bundle_id):
+    """
+    Launches the app on the simulator, the requested number of times, while also computing memory usage.
+    :param simulator_name: name of simulator to run the tests on
+    :param launch_type: COLD or WARM
+    :param launch_nr: how many times to launch the app - average value is computed
+    :param bundle_id: bundle ID of the application
+    :return: memory usage average value or None if error occurred
+    """
+    try:
+        memory_usage: float = 0.00
 
-    for nr in range(1, launch_nr + 1):
-        logging.info("[{LAUNCH_NR}]. Running launch...".format(LAUNCH_NR=nr))
-        if launch_type == "COLD":
-            reboot_simulator(simulator_name)
+        for nr in range(1, launch_nr + 1):
+            logging.info("[{LAUNCH_NR}]. Running launch...".format(LAUNCH_NR=nr))
+            if launch_type == "COLD":
+                reboot_simulator(simulator_name)
 
-        launch_app(simulator_name, bundle_id)
-        time.sleep(TIMEOUT)
-        terminate_app(simulator_name, bundle_id)
+            app_pid = launch_app(simulator_name, bundle_id)
+            time.sleep(TIMEOUT)
+
+            memory_usage += compute_memory_usage(app_pid)
+            terminate_app(simulator_name, bundle_id)
+            time.sleep(2)
+
+        memory_usage /= launch_nr
+
+    except Exception as e:
+        logging.error("Running launches failed with error {ERROR}".format(ERROR=e))
+        return None
+
+    logging.info("Launches executed successfuly!")
+    return memory_usage
 
 
 def run_tests(args):
-    test_results = []
+    TEST_RESULTS = {
+        LAUNCHES: []
+    }
 
     logging.info("----------------------------------------------------------------------------------------------------")
     app_path = get_app(args)
     if app_path is None:
-        logging.error("Will check if the app is already installed on the device...")
+        return False
+    app_size = compute_app_size(app_path)
+    TEST_RESULTS[APP_SIZE] = app_size
+
     shutdown_simulators()
 
     logging.info("----------------------------------------------------------------------------------------------------")
@@ -301,11 +398,20 @@ def run_tests(args):
         time.sleep(TIMEOUT)
         terminate_app(simulator_name, args.bundle_id)
 
-        # test
         for launch_type in args.launch_type:
             logging.info("----------------------------------------------------------------------------------------------------")
             logging.info("Testing '{LAUNCH_TYPE}' launch on '{SIMULATOR}':".format(LAUNCH_TYPE=launch_type, SIMULATOR=simulator_name))
-            run_launches(simulator_name, launch_type, args.launch_nr, args.bundle_id)
+
+            memory_usage = run_launches(simulator_name, launch_type, args.launch_nr, args.bundle_id)
+            # TODO - get logs and parse launch time
+
+            launch_data = {
+                DEVICE: simulator_name,
+                LAUNCH_TYPE: launch_type,
+                MEMORY_USAGE: memory_usage,
+                LAUNCH_DURATION: None
+            }
+            TEST_RESULTS[LAUNCHES].append(launch_data)
 
         shutdown_simulators()
         logging.info("Finished running tests on device {DEVICE}".format(DEVICE=simulator_name))
