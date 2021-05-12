@@ -45,9 +45,9 @@ def parse_args():
     parser.add_argument('--launch_nr', required=False, default=3, type=int, help='Number of launches for computing the average metric')
 
     # Test baselines
-    parser.add_argument('--duration_limit', required=False, default=5000, type=float, help='Launch duration acceptable limit in milliseconds')
-    parser.add_argument('--memory_limit', required=False, default=250, type=float, help='Launch memory usage acceptable limit in MB')
-    parser.add_argument('--size_limit', required=False, default=500, type=float, help='App size acceptable limit in MB')
+    parser.add_argument('--duration_limit', required=False, default=5000, type=int, help='Launch duration acceptable limit in milliseconds')
+    parser.add_argument('--memory_limit', required=False, default=250, type=int, help='Launch memory usage acceptable limit in MB')
+    parser.add_argument('--size_limit', required=False, default=500, type=int, help='App size acceptable limit in MB')
 
     # App information for installing app
     # There are 2 mutually exclusive options for getting the APP
@@ -592,15 +592,96 @@ def run_tests(args):
     return TEST_RESULTS
 
 
+def create_test_summary(args, TEST_RESULTS):
+    """
+    Created a text with the test results summary
+    :param TEST_RESULTS: dictionary with collected metrics
+    :return: string text or None if error occurred
+    """
+    logging.error("Creating test summary report...")
+
+    try:
+        test_summary = "Performance Metrics of {APP} Application Tested from this PR\n".format(APP=args.bundle_id)
+        test_summary += "---------------------------------------------------------------\n"
+
+        for element in TEST_RESULTS:
+            if element != LAUNCHES:
+                test_summary += "> {KEY}: {VALUE}".format(KEY=element, VALUE=TEST_RESULTS[element])
+                if element == INSTALL_LAUNCH_DURATION:
+                    if int(TEST_RESULTS[INSTALL_LAUNCH_DURATION]) > args.duration_limit:
+                        test_summary += "ms  :x:\n"
+                    else:
+                        test_summary += "ms  :white_check_mark:\n"
+
+                if element == INSTALL_MEMORY_USAGE:
+                    if int(TEST_RESULTS[INSTALL_MEMORY_USAGE]) > args.memory_limit:
+                        test_summary += "MB  :x:\n"
+                    else:
+                        test_summary += "MB  :white_check_mark:\n"
+
+                if element == APP_SIZE:
+                    if int(TEST_RESULTS[APP_SIZE]) > args.size_limit:
+                        test_summary += "MB  :x:\n"
+                    else:
+                        test_summary += "MB  :white_check_mark:\n"
+        test_summary += "---------------------------------------------------------------\n"
+
+        for element in TEST_RESULTS[LAUNCHES]:
+            test_summary += "> DEVICE: {DEVICE} | LAUNCH TYPE: {LAUNCH_TYPE} | ".format(DEVICE=element[DEVICE], LAUNCH_TYPE=element[LAUNCH_TYPE])
+            test_summary += "DURATION: {DURATION}ms ".format(DURATION=element[LAUNCH_DURATION])
+            if int(element[LAUNCH_DURATION]) > args.duration_limit:
+                test_summary += " :x: | "
+            else:
+                test_summary += " :white_check_mark: | "
+
+            test_summary += "MEMORY USAGE: {MEMORY_USAGE}MB ".format(MEMORY_USAGE=element[MEMORY_USAGE])
+            if int(element[MEMORY_USAGE]) > args.memory_limit:
+                test_summary += " :x:\n"
+            else:
+                test_summary += " :white_check_mark:\n"
+        test_summary += "----------------------------------------------------\n"
+
+    except Exception as e:
+        logging.error("Creating test summary failed with error {ERROR}".format(ERROR=e))
+        return None
+
+    logging.info(test_summary)
+    return test_summary
+
+
+def report_tests(args, test_summary):
+    """
+    Posts test report on pull request
+    :param args: script arguments
+    :param test_summary: text with test summary info
+    """
+    try:
+        if None not in [args.repo_github_token, args.repo_owner, args.repo_name, args.pr_number]:
+            comment_on_pr(args.repo_github_token, test_summary, args.repo_owner, args.repo_name, args.pr_number)
+
+    except Exception as e:
+        logging.error("Posting test report on PR failed with error {ERROR}".format(ERROR=e))
+
+
 def main():
-    args = parse_args()
+    """
+    Handles all the business logic
+    :return: test results in dictionary/JSON format or None if error occurred
+    """
+    logging.info("Testing iOS application performance metrics: application size, launch duration and RAM memory usage!")
 
-    TEST_RESULTS = run_tests(args)
-    logging.info("Test results: '{RESULTS}'".format(RESULTS=TEST_RESULTS))
+    try:
+        args = parse_args()
 
-    if None not in [args.repo_github_token, args.repo_owner, args.repo_name, args.pr_number]:
-        comment_on_pr(args.repo_github_token, str(TEST_RESULTS), args.repo_owner, args.repo_name, args.pr_number)
+        TEST_RESULTS = run_tests(args)
+        test_summary = create_test_summary(args, TEST_RESULTS)
+        report_tests(args, test_summary)
 
+    except Exception as e:
+        logging.error("Testing performance of application failed with error {ERROR}".format(ERROR=e))
+        return None
+
+    return TEST_RESULTS
 
 if __name__ == "__main__":
     main()
