@@ -1,7 +1,7 @@
 
     Use `python3` for these scripts.
 
-    Usage:
+    Manual usage:
     ```
         # pwd = Licenta/BusinessLogic
 
@@ -19,4 +19,9 @@
                 --repo_owner TODO \
                 --repo_name TODO \
                 --pr_number TODO
+    ```
+
+    Docker usage:
+    ```
+        docker-compose up [--build]
     ```
