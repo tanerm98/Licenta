@@ -604,7 +604,7 @@ def create_test_summary(args, TEST_RESULTS):
     logging.error("Creating test summary report...")
 
     try:
-        test_summary = "Performance Metrics of '{APP}' Application Tested from this PR\n".format(APP=args.bundle_id)
+        test_summary = "Performance Metrics of {APP} Application Tested from this PR\n".format(APP=args.bundle_id)
         test_summary += "---------------------------------------------------------------\n"
 
         for element in TEST_RESULTS:
