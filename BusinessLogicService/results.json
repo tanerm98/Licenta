@@ -1,0 +1,13 @@
+{
+    "LAUNCHES": [
+        {
+            "DEVICE": "iPhone 11",
+            "LAUNCH TYPE": "WARM",
+            "MEMORY USAGE": 5.36,
+            "LAUNCH DURATION": 2298
+        }
+    ],
+    "APP SIZE": 1,
+    "FIRST LAUNCH AFTER INSTALL - DURATION": 1561,
+    "FIRST LAUNCH AFTER INSTALL - MEMORY USAGE": 5.38
+}

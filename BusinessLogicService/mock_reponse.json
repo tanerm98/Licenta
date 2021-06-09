@@ -1,0 +1,34 @@
+{
+    "results": {
+        "LAUNCHES": [
+            {
+                "DEVICE": "iPhone 8",
+                "LAUNCH TYPE": "WARM",
+                "MEMORY USAGE": 5.35,
+                "LAUNCH DURATION": 2188
+            },
+            {
+                "DEVICE": "iPhone 8",
+                "LAUNCH TYPE": "COLD",
+                "MEMORY USAGE": 5.37,
+                "LAUNCH DURATION": 2623
+            },
+            {
+                "DEVICE": "iPhone 11",
+                "LAUNCH TYPE": "WARM",
+                "MEMORY USAGE": 5.33,
+                "LAUNCH DURATION": 2304
+            },
+            {
+                "DEVICE": "iPhone 11",
+                "LAUNCH TYPE": "COLD",
+                "MEMORY USAGE": 5.38,
+                "LAUNCH DURATION": 3252
+            }
+        ],
+        "APP SIZE": 1,
+        "FIRST LAUNCH AFTER INSTALL - DURATION": 2914,
+        "FIRST LAUNCH AFTER INSTALL - MEMORY USAGE": 5.36
+    },
+    "summary": "Performance Metrics of Fitbit.Concentration Application Tested from this PR\n---------------------------------------------------------------\n> APP SIZE: 1MB  :white_check_mark:\n> FIRST LAUNCH AFTER INSTALL - DURATION: 2914ms  :x:\n> FIRST LAUNCH AFTER INSTALL - MEMORY USAGE: 5.36MB  :white_check_mark:\n---------------------------------------------------------------\n> DEVICE: iPhone 8 | LAUNCH TYPE: WARM | DURATION: 2188ms  :x: | MEMORY USAGE: 5.35MB  :white_check_mark:\n> DEVICE: iPhone 8 | LAUNCH TYPE: COLD | DURATION: 2623ms  :x: | MEMORY USAGE: 5.37MB  :white_check_mark:\n> DEVICE: iPhone 11 | LAUNCH TYPE: WARM | DURATION: 2304ms  :x: | MEMORY USAGE: 5.33MB  :white_check_mark:\n> DEVICE: iPhone 11 | LAUNCH TYPE: COLD | DURATION: 3252ms  :x: | MEMORY USAGE: 5.38MB  :white_check_mark:\n----------------------------------------------------\n"
+}
