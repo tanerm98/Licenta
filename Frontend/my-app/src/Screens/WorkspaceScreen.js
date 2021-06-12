@@ -71,7 +71,7 @@ export default function WorkspaceScreen(props){
             </div>
         ) : (
             <div className="TODO">
-                Loading or no jobs found. Please <button className="primary" onClick={retry}>RETRY</button>...
+                Loading... Please <button className="primary" onClick={retry}>RETRY</button>...
                 {errorMessage && (<p className="error"> {errorMessage} </p>)}
             </div>
         )

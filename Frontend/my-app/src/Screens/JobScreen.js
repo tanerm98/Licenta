@@ -47,6 +47,11 @@ export default function JobScreen(props){
         }
     },[setJob, token]);
 
+    const retry = (e) => {
+        e.preventDefault();
+        window.location.reload();
+    };
+
     return(
         job != null && job.id == jobId ? (
             <div>
@@ -66,7 +71,7 @@ export default function JobScreen(props){
             </div>
         ) : (
             <div>
-                Loading... Please refresh!
+                Loading... Please <button className="primary" onClick={retry}>RETRY</button>...
                 {errorMessage && (<p className="error"> {errorMessage} </p>)}
             </div>
         )

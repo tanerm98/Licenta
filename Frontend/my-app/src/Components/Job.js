@@ -12,7 +12,12 @@ export default function Workspace(props){
                 <h3> Tested application: {job.app_bundle_id} </h3>
                 <h3> PR ID: {job.pr_id} (0 - master branch)</h3>
                 <h3> Test summary: </h3>
-                <text> {job.summary} </text>
+                <br/><br/>
+                <text>
+                    {job.summary.split("\\n").map((i,key) => {
+                        return <div key={key}>{i}</div>;
+                    })}
+                </text>
                 <br/>
             </div>
         </div>
