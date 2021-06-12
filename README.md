@@ -19,6 +19,9 @@
     Web App: cwd = BackendLogicServices/AppService
         $ npm install
         $ npm run start
+    Frontend: cwd = Frontend/my-app
+        $ npm install
+        $ npm run start
     
 ## REST API Endpoints, Documentation and Usage:
     Login Service: PORT 3003
