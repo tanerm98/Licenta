@@ -53,6 +53,11 @@ export default function JobsScreen(props){
         history.push(path)
     };
 
+    const retry = (e) => {
+        e.preventDefault();
+        window.location.reload();
+    };
+
     const deleteJob = (jobId, e) => {
         e.preventDefault();
         axios.delete(
@@ -110,7 +115,7 @@ export default function JobsScreen(props){
         ) : (
             <div className="TODO">
                 <h3><Link to={`/workspace/${workspaceId}`}> {workspaceId} </Link></h3>
-                No jobs found. Please retry...
+                Loading or no jobs found. Please <button className="primary" onClick={retry}>RETRY</button>...
                 <br/><br/><br/>
                 <button className="primary" onClick={runJob}> Run new job </button>
                 <br/><br/><br/>

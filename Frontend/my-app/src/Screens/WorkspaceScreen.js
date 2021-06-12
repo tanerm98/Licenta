@@ -47,6 +47,11 @@ export default function WorkspaceScreen(props){
         }
     },[workspace, token]);
 
+    const retry = (e) => {
+        e.preventDefault();
+        window.location.reload();
+    };
+
     return(
         workspace != null && workspace.app_bundle_id == workspaceId ? (
             <div>
@@ -65,8 +70,8 @@ export default function WorkspaceScreen(props){
                 </div>
             </div>
         ) : (
-            <div>
-                Loading... Please retry!
+            <div className="TODO">
+                Loading or no jobs found. Please <button className="primary" onClick={retry}>RETRY</button>...
                 {errorMessage && (<p className="error"> {errorMessage} </p>)}
             </div>
         )
