@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
+import { TiUserAddOutline } from 'react-icons/ti';
 
 import Footer from '../Components/Footer';
 
@@ -52,7 +53,7 @@ export default function RegisterScreen() {
 
                 <form onSubmit={submitHandler}>
                   <div className="header-log">
-                    <h1>Create account</h1>
+                    <h1><TiUserAddOutline/> Create account</h1>
                   </div>
                   <input type="text" id="login" class="fadeIn second" name="login" placeholder="Username" required onChange={e => setUsername(e.target.value)}></input>
                   <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password" required onChange={e => setPassword(e.target.value)}></input>

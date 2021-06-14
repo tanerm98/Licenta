@@ -5,10 +5,12 @@ const Layout = (props) => {
   return (
     
     <div className="layout">
-      <Header />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"></link>
-      {props.children}
-      <Footer />
+      <div class="page">
+          <Header />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"></link>
+          {props.children}
+          <Footer />
+      </div>
     </div>
   );
 }

@@ -23,11 +23,17 @@ body {
 
 .container-fluid {
  overflow: hidden;
- margin-top: 250px;
+ margin-top: 0px;
  background: #262626;
  color: #627482 !important;
  margin-bottom: 0;
  padding-bottom: 0
+}
+
+.page {
+    background-image: url("https://i.pinimg.com/originals/e4/d5/7f/e4d57f025c97334515d6a9d6c4d28b84.png");
+    background-repeat: no-repeat, repeat;
+    background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 small {
@@ -277,7 +283,6 @@ h3 {
 /* BASIC */
 
 html {
-  background-color: #56baed;
 }
 
 body {
@@ -313,7 +318,7 @@ h2 {
   justify-content: center;
   width: 100%;
   min-height: 100%;
-  padding: 20px;
+  padding: 60px;
 }
 
 #formContent {
@@ -568,4 +573,16 @@ input[type=password]:placeholder {
     font-size: 35px !important;
     font-weight:bold;
     text-align:center;
+}
+
+.b-example-divider {
+  height: 0.5rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+@media (min-width: 992px) {
+  .rounded-lg-3 { border-radius: .3rem; }
 }

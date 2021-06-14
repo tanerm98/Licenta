@@ -4,6 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
 import { Navbar } from 'react-bootstrap';
 
+import { AiOutlineLogin } from 'react-icons/ai';
+
 import Footer from '../Components/Footer';
 
 export default function LoginScreen() {
@@ -53,7 +55,7 @@ export default function LoginScreen() {
 
                 <form onSubmit={submitHandler}>
                   <div className="header-log">
-                    <h1>Sign In</h1>
+                    <h1><AiOutlineLogin/> Sign In</h1>
                   </div>
                   <input type="text" id="login" class="fadeIn second" name="login" placeholder="Username" required onChange={e => setUsername(e.target.value)}></input>
                   <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password" required onChange={e => setPassword(e.target.value)}></input>
