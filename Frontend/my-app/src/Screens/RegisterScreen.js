@@ -2,6 +2,9 @@ import axios from 'axios';
 
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { Navbar } from 'react-bootstrap';
+
+import Footer from '../Components/Footer';
 
 export default function RegisterScreen() {
 
@@ -40,51 +43,32 @@ export default function RegisterScreen() {
 
     return(
         <div>
-            <header>
-                <div className="header">
-                    <div className="TODO">
-                        <h1><Link to={`/`}>iOS Performance Monitor</Link></h1>
-                    </div>
+            <div class="wrapper fadeInDown">
+              <div id="formContent">
+
+                <div class="fadeIn first">
+                  <img src="https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png" id="icon" alt="User Icon" />
                 </div>
-                <br />
-            </header>
-            <main>
-                <form className="form" onSubmit={submitHandler}>
-                    <div className="header-log">
-                        <h1>Create account</h1>
-                    </div>
-                    <div>
-                        <label htmlFor="username" className="labels">
-                            Username
-                        </label>
-                        <br />
-                        <input type="text" id="username" required
-                            onChange={e => setUsername(e.target.value)}></input>
-                    </div>
-                    <br />
-                    <div>
-                        <label htmlFor="password" className="labels">
-                            Password
-                        </label>
-                        <br />
-                        <input type="password" id="password" required
-                            onChange={e => setPassword(e.target.value)}></input>
-                    </div>
-                    <br />
-                    <div>
-                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
-                    </div>
-                    <br />
-                    <div>
-                        <label />
-                        <button className="primary" type="submit">Register</button>
-                    </div>
+
+                <form onSubmit={submitHandler}>
+                  <div className="header-log">
+                    <h1>Create account</h1>
+                  </div>
+                  <input type="text" id="login" class="fadeIn second" name="login" placeholder="Username" required onChange={e => setUsername(e.target.value)}></input>
+                  <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password" required onChange={e => setPassword(e.target.value)}></input>
+                  <input type="submit" class="fadeIn fourth" value="Register"></input>
                 </form>
-            <div className="TODO">
-                    Already have an account? {' '}
-                    <Link to={"/login"}>Login</Link>
+
+                <div>
+                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
                 </div>
-            </main>
+
+                <div id="formFooter">
+                  Already have an account? <a class="underlineHover" href="#login">Log In</a>
+                </div>
+
+              </div>
+            </div>
         </div>
     )
 }

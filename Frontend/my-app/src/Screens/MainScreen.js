@@ -1,24 +1,14 @@
-import axios from 'axios';
-
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 
-import { Link, useHistory } from 'react-router-dom';
-import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function LoginScreen() {
-
-    const history = useHistory();
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+export default function MainScreen() {
 
     return(
         <div>
-            <main>
+            <Header />
                 <div className="container-fluid">
-                    <h1>iOS Application Performance Metrics Monitor</h1>
                     <p>This web application is used for measuring the performance metrics of iOS applications</p>
                     <h2>Measured metrics:</h2>
                     <ul>
@@ -56,7 +46,6 @@ export default function LoginScreen() {
                     Don't have an account? {' '}
                     <Link to={"/register"}>Register</Link>
                 </div>
-            </main>
             <Footer />
         </div>
     )

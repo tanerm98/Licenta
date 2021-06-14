@@ -21,9 +21,9 @@ function App() {
     <HashRouter basename="/">
       <Switch>
         <Route exact path={"/"} component= {MainScreen} />
-        <Route path={"/login"} component = {LoginScreen} />
-        <Route path={"/register"} component = {RegisterScreen} />
         <Layout>
+          <Route path={"/login"} component = {LoginScreen} />
+          <Route path={"/register"} component = {RegisterScreen} />
           <Route path={"/workspaces"} component = {WorkspacesScreen} />
           <Route path={"/workspace/:workspaceId"} component = {WorkspaceScreen} />
           <Route path={"/workspacecreate"} component = {WorkspaceCreateScreen} />

@@ -1,22 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 
-const Footer = () => {
+import { Nav, Navbar } from 'react-bootstrap';
+
+const Header = () => {
   return (
-    <header>
-        <div className="header">
-            <div className="navbar">
-                <h1><Link to={`/workspaces`}>iOS Performance Monitor</Link></h1>
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand href="#workspaces">
+            <div class="navbar-text">
+                iOS Performance Monitor
             </div>
-        </div>
-        <div className="settings">
-            <div className="navbar">
-                <h5><Link to={`/settings`}>Settings</Link></h5>
-            </div>
-        </div>
-        <br />
-    </header>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <Nav.Link href="#/">About</Nav.Link>
+          </Navbar.Collapse>
+          <Navbar.Collapse className="justify-content-end">
+            <Navbar.Text>
+              <a href="#settings"> Settings </a>
+            </Navbar.Text>
+          </Navbar.Collapse>
+        </Navbar>
   );
 }
 
-export default Footer;
+export default Header;
