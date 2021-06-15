@@ -2,7 +2,9 @@ import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import Workspace from "../Components/Workspace";
+import Unauthorized from '../Components/Unauthorized';
 
 export default function WorkspacesScreen(){
 
@@ -77,40 +79,44 @@ export default function WorkspacesScreen(){
     };
 
     return(
-        workspaces.length > 0 ? (
-            <div>
-                <main>
-                    <div className="row center">
-                        {
-                            workspaces.map(
-                                workspace => (
-                                    <div>
-                                        <Workspace key={workspace.app_bundle_id} workspace={workspace}></Workspace>
-                                        <button onClick={(e) => deleteWorkspace(workspace.app_bundle_id, e)}> Delete this workspace </button>
-                                        <br/><br/><br/><br/>
-                                    </div>
+        token != null ? (
+            workspaces.length > 0 ? (
+                <div>
+                    <main>
+                        <div className="row center">
+                            {
+                                workspaces.map(
+                                    workspace => (
+                                        <div>
+                                            <Workspace key={workspace.app_bundle_id} workspace={workspace}></Workspace>
+                                            <button onClick={(e) => deleteWorkspace(workspace.app_bundle_id, e)}> Delete this workspace </button>
+                                            <br/><br/><br/><br/>
+                                        </div>
+                                    )
                                 )
-                            )
-                        }
-                    </div>
-                    <div>
-                        <button className="primary" onClick={createWorkspace}> Create new workspace </button>
-                    </div>
+                            }
+                        </div>
+                        <div>
+                            <button className="primary" onClick={createWorkspace}> Create new workspace </button>
+                        </div>
+                        <div>
+                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                        </div>
+                    </main>
+                </div>
+            ) : (
+                <div>
+                    No workspaces found. :D
+                    <br/>
+                    <button className="primary" onClick={createWorkspace}> Create new workspace </button>
+                    <br/>
                     <div>
                         {errorMessage && (<p className="error"> {errorMessage} </p>)}
                     </div>
-                </main>
-            </div>
-        ) : (
-            <div>
-                No workspaces found. :D
-                <br/>
-                <button className="primary" onClick={createWorkspace}> Create new workspace </button>
-                <br/>
-                <div>
-                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
                 </div>
-            </div>
+            )
+        ) : (
+            <Unauthorized/>
         )
     )
 }

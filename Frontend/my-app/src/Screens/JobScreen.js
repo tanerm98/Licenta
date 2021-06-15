@@ -2,7 +2,9 @@ import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import Job from "../Components/Job";
+import Unauthorized from '../Components/Unauthorized';
 
 export default function JobScreen(props){
 
@@ -53,27 +55,31 @@ export default function JobScreen(props){
     };
 
     return(
-        job != null && job.id == jobId ? (
-            <div>
-                <div className="TODO">
-                    <h3><Link to={`/jobs/${job.app_bundle_id}`}> Back to {job.app_bundle_id} jobs </Link></h3>
-                    <br/><br/>
-                </div>
-                <main>
-                    <div className="row center">
-                        <div>
-                            <Job key={job.id} job={job}></Job>
-                            <br/>
-                        </div>
+        token != null ? (
+            job != null && job.id == jobId ? (
+                <div>
+                    <div className="TODO">
+                        <h3><Link to={`/jobs/${job.app_bundle_id}`}> Back to {job.app_bundle_id} jobs </Link></h3>
+                        <br/><br/>
                     </div>
+                    <main>
+                        <div className="row center">
+                            <div>
+                                <Job key={job.id} job={job}></Job>
+                                <br/>
+                            </div>
+                        </div>
 
-                </main>
-            </div>
+                    </main>
+                </div>
+            ) : (
+                <div>
+                    Loading... Please <button className="primary" onClick={retry}>RETRY</button>...
+                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                </div>
+            )
         ) : (
-            <div>
-                Loading... Please <button className="primary" onClick={retry}>RETRY</button>...
-                {errorMessage && (<p className="error"> {errorMessage} </p>)}
-            </div>
+            <Unauthorized/>
         )
     )
 }

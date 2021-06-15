@@ -2,12 +2,15 @@ import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import User from "../Components/User";
+import Unauthorized from '../Components/Unauthorized';
 
 export default function WorkspacesScreen(){
 
     const history = useHistory();
     const token = localStorage.getItem("token");
+    var authorized = 1;
 
     const [users, setUsers] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
@@ -47,34 +50,38 @@ export default function WorkspacesScreen(){
     },[users, token]);
 
     return(
-        users.length > 0 ? (
-            <div>
-                <main>
-                    <div className="row center">
-                        {
-                            users.map(
-                                user => (
-                                    <div>
-                                        <User key={user.id} user={user}></User>
-                                        <br/><br/><br/><br/>
-                                    </div>
+        (token != null && authorized == 1) ? (
+            users.length > 0 ? (
+                <div>
+                    <main>
+                        <div className="row center">
+                            {
+                                users.map(
+                                    user => (
+                                        <div>
+                                            <User key={user.id} user={user}></User>
+                                            <br/><br/><br/><br/>
+                                        </div>
+                                    )
                                 )
-                            )
-                        }
-                    </div>
+                            }
+                        </div>
+                        <div>
+                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                        </div>
+                    </main>
+                </div>
+            ) : (
+                <div>
+                    No users found!
+                    <br/><br/>
                     <div>
                         {errorMessage && (<p className="error"> {errorMessage} </p>)}
                     </div>
-                </main>
-            </div>
-        ) : (
-            <div>
-                No users found!
-                <br/><br/>
-                <div>
-                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
                 </div>
-            </div>
+            )
+        ) : (
+            <Unauthorized/>
         )
     )
 }

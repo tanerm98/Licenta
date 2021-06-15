@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
+import Unauthorized from '../Components/Unauthorized';
+
 export default function WorkspaceCreateScreen() {
 
     const history = useHistory();
@@ -57,49 +59,53 @@ export default function WorkspaceCreateScreen() {
     };
 
     return(
-        <div>
-            <main>
-                <form className="form" onSubmit={submitHandler}>
-                    <div className="header-log">
-                        <h1>Create workspace</h1>
-                    </div>
-                    <div>
-                        <label htmlFor="appBundleId" className="labels">
-                            iOS Application Bundle ID
-                        </label>
+        token != null ? (
+            <div>
+                <main>
+                    <form className="form" onSubmit={submitHandler}>
+                        <div className="header-log">
+                            <h1>Create workspace</h1>
+                        </div>
+                        <div>
+                            <label htmlFor="appBundleId" className="labels">
+                                iOS Application Bundle ID
+                            </label>
+                            <br />
+                            <input type="text" id="appBundleId" required
+                                onChange={e => setAppBundleId(e.target.value)}></input>
+                        </div>
                         <br />
-                        <input type="text" id="appBundleId" required
-                            onChange={e => setAppBundleId(e.target.value)}></input>
-                    </div>
-                    <br />
-                    <div>
-                        <label htmlFor="description" className="labels">
-                            Description
-                        </label>
+                        <div>
+                            <label htmlFor="description" className="labels">
+                                Description
+                            </label>
+                            <br />
+                            <input type="text" id="description" required
+                                onChange={e => setDescription(e.target.value)}></input>
+                        </div>
                         <br />
-                        <input type="text" id="description" required
-                            onChange={e => setDescription(e.target.value)}></input>
-                    </div>
-                    <br />
-                    <div>
-                        <label htmlFor="repoLink" className="labels">
-                            Repository Link
-                        </label>
+                        <div>
+                            <label htmlFor="repoLink" className="labels">
+                                Repository Link
+                            </label>
+                            <br />
+                            <input type="text" id="repoLink" required
+                                onChange={e => setRepoLink(e.target.value)}></input>
+                        </div>
                         <br />
-                        <input type="text" id="repoLink" required
-                            onChange={e => setRepoLink(e.target.value)}></input>
-                    </div>
-                    <br />
-                    <div>
-                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
-                    </div>
-                    <br />
-                    <div>
-                        <label />
-                        <button className="primary" type="submit">Create</button>
-                    </div>
-                </form>
-            </main>
-        </div>
+                        <div>
+                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                        </div>
+                        <br />
+                        <div>
+                            <label />
+                            <button className="primary" type="submit">Create</button>
+                        </div>
+                    </form>
+                </main>
+            </div>
+        ) : (
+            <Unauthorized/>
+        )
     )
 }

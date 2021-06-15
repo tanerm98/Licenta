@@ -19,7 +19,8 @@ const addAsyncInstallData = async (app_bundle_id, app_size, install_launch, inst
 const getLaunchDuration = async (app_bundle_id, device, launch_type, limit) => {
     console.info(`Getting launch duration data from database async...`);
 
-    command = "select today_date, avg(launch_duration) "
+    command = "select * from ( "
+    command += "select today_date, avg(launch_duration) "
     command += "from launch_data "
     command += "where app_bundle_id='" + app_bundle_id + "' "
     command += "and launch_duration is not null "
@@ -31,6 +32,8 @@ const getLaunchDuration = async (app_bundle_id, device, launch_type, limit) => {
     }
     command += "group by today_date "
     command += "order by today_date desc "
+    command += ") s "
+    command += "order by today_date asc"
     if (limit != null) {
         command += "limit " + limit
     }
@@ -41,7 +44,8 @@ const getLaunchDuration = async (app_bundle_id, device, launch_type, limit) => {
 const getLaunchMemory = async (app_bundle_id, device, launch_type, limit) => {
     console.info(`Getting launch memory usage data from database async...`);
 
-    command = "select today_date, avg(memory_usage) "
+    command = "select * from ( "
+    command += "select today_date, avg(memory_usage) "
     command += "from launch_data "
     command += "where app_bundle_id='" + app_bundle_id + "' "
     command += "and memory_usage is not null "
@@ -53,6 +57,8 @@ const getLaunchMemory = async (app_bundle_id, device, launch_type, limit) => {
     }
     command += "group by today_date "
     command += "order by today_date desc "
+    command += ") s "
+    command += "order by today_date asc"
     if (limit != null) {
         command += "limit " + limit
     }
@@ -63,12 +69,15 @@ const getLaunchMemory = async (app_bundle_id, device, launch_type, limit) => {
 const getInstallDuration = async (app_bundle_id, limit) => {
     console.info(`Getting install launch duration data from database async...`);
 
-    command = "select today_date, avg(install_launch) "
+    command = "select * from ( "
+    command += "select today_date, avg(install_launch) "
     command += "from install_data "
     command += "where app_bundle_id='" + app_bundle_id + "' "
     command += "and install_launch is not null "
     command += "group by today_date "
     command += "order by today_date desc "
+    command += ") s "
+    command += "order by today_date asc"
     if (limit != null) {
         command += "limit " + limit
     }
@@ -79,12 +88,15 @@ const getInstallDuration = async (app_bundle_id, limit) => {
 const getInstallMemory = async (app_bundle_id, limit) => {
     console.info(`Getting install memory usage data from database async...`);
 
-    command = "select today_date, avg(install_memory) "
+    command = "select * from ( "
+    command += "select today_date, avg(install_memory) "
     command += "from install_data "
     command += "where app_bundle_id='" + app_bundle_id + "' "
     command += "and install_memory is not null "
     command += "group by today_date "
     command += "order by today_date desc "
+    command += ") s "
+    command += "order by today_date asc"
     if (limit != null) {
         command += "limit " + limit
     }
@@ -95,12 +107,15 @@ const getInstallMemory = async (app_bundle_id, limit) => {
 const getAppSize = async (app_bundle_id, limit) => {
     console.info(`Getting install app size data from database async...`);
 
-    command = "select today_date, avg(app_size) "
+    command = "select * from ( "
+    command += "select today_date, avg(app_size) "
     command += "from install_data "
     command += "where app_bundle_id='" + app_bundle_id + "' "
     command += "and app_size is not null "
     command += "group by today_date "
     command += "order by today_date desc "
+    command += ") s "
+    command += "order by today_date asc"
     if (limit != null) {
         command += "limit " + limit
     }

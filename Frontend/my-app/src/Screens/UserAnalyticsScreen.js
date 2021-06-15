@@ -2,7 +2,10 @@ import axios from 'axios';
 
 import React, { Component, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import UserMetric from "../Components/UserMetric";
+import Unauthorized from '../Components/Unauthorized';
+
 import '../graphstyle.css';
 import {XYPlot, LineSeries, VerticalBarSeries, MarkSeries } from 'react-vis';
 
@@ -82,34 +85,38 @@ export default function UserAnalyticsScreen(){
     },[analytics, token]);
 
     return(
-        registersData.length > 0 ? (
-            <div>
-                <h1> User activity analytics </h1>
-                <div className="graph">
-                    <h2> Users registered per day </h2>
-                    <XYPlot height={300} width={300}>
-                        <VerticalBarSeries data={registersData} color="red" />
-                    </XYPlot>
-
-                    <h2> Users logged in per day </h2>
-                    <XYPlot height={300} width={300}>
-                        <VerticalBarSeries data={loginsData} color="blue" />
-                    </XYPlot>
-
-                    <h2> Jobs run by users per day </h2>
-                    <XYPlot height={300} width={300}>
-                        <VerticalBarSeries data={jobsData} color="green" />
-                    </XYPlot>
-                </div>
-            </div>
-        ) : (
-            <div>
-                No user analytics found!
-                <br/>
+        token != null ? (
+            registersData.length > 0 ? (
                 <div>
-                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                    <h1> User activity analytics </h1>
+                    <div className="graph">
+                        <h2> Users registered per day </h2>
+                        <XYPlot height={300} width={300}>
+                            <VerticalBarSeries data={registersData} color="red" />
+                        </XYPlot>
+
+                        <h2> Users logged in per day </h2>
+                        <XYPlot height={300} width={300}>
+                            <VerticalBarSeries data={loginsData} color="blue" />
+                        </XYPlot>
+
+                        <h2> Jobs run by users per day </h2>
+                        <XYPlot height={300} width={300}>
+                            <VerticalBarSeries data={jobsData} color="green" />
+                        </XYPlot>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div>
+                    No user analytics found!
+                    <br/>
+                    <div>
+                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                    </div>
+                </div>
+            )
+        ) : (
+            <Unauthorized/>
         )
     )
 }

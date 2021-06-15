@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { Nav, Navbar } from 'react-bootstrap';
-import { AiFillSetting, AiFillInfoCircle } from 'react-icons/ai';
+import { AiFillSetting } from 'react-icons/ai';
 import { CgPerformance } from 'react-icons/cg';
+import { ImHome } from 'react-icons/im';
 
 const Header = () => {
   return (
@@ -10,7 +11,7 @@ const Header = () => {
         <Navbar bg="light" expand="lg">
           <Navbar.Collapse className="justify-content-start">
             <Navbar.Text>
-              <a href="#/"> <AiFillInfoCircle /> About </a>
+              <a href="#/"> <ImHome /> Home </a>
             </Navbar.Text>
           </Navbar.Collapse>
           <Navbar.Brand href="#workspaces">

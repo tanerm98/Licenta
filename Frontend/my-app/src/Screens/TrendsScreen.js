@@ -6,6 +6,8 @@ import PerfMetric from "../Components/PerfMetric";
 import '../graphstyle.css';
 import {XYPlot, LineSeries, VerticalBarSeries, MarkSeries } from 'react-vis';
 
+import Unauthorized from '../Components/Unauthorized';
+
 export default function UserAnalyticsScreen(props){
 
     const workspaceId = props.match.params.workspaceId;
@@ -102,44 +104,48 @@ export default function UserAnalyticsScreen(props){
     },[launch_duration_data, token]);
 
     return(
-        launch_duration_data.length > 0 ? (
-            <div>
-                <h1> Performance trends for application {workspaceId} </h1>
-                <div className="graph">
-                    <h2> Launch duration </h2>
-                    <XYPlot height={300} width={300}>
-                        <LineSeries data={launch_duration_data} color="red" />
-                    </XYPlot>
-
-                    <h2> Memory usage </h2>
-                    <XYPlot height={300} width={300}>
-                        <LineSeries data={launch_memory_data} color="red" />
-                    </XYPlot>
-
-                    <h2> After install launch duration </h2>
-                    <XYPlot height={300} width={300}>
-                        <LineSeries data={install_duration_data} color="red" />
-                    </XYPlot>
-
-                    <h2> After install memory usage </h2>
-                    <XYPlot height={300} width={300}>
-                        <LineSeries data={install_memory_data} color="red" />
-                    </XYPlot>
-
-                    <h2> Application size </h2>
-                    <XYPlot height={300} width={300}>
-                        <LineSeries data={app_size_data} color="red" />
-                    </XYPlot>
-                </div>
-            </div>
-        ) : (
-            <div>
-                No performance data found!
-                <br/>
+        token != null ? (
+            launch_duration_data.length > 0 ? (
                 <div>
-                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                    <h1> Performance trends for application {workspaceId} </h1>
+                    <div className="graph">
+                        <h2> Launch duration </h2>
+                        <XYPlot height={300} width={300}>
+                            <LineSeries data={launch_duration_data} color="red" />
+                        </XYPlot>
+
+                        <h2> Memory usage </h2>
+                        <XYPlot height={300} width={300}>
+                            <LineSeries data={launch_memory_data} color="red" />
+                        </XYPlot>
+
+                        <h2> After install launch duration </h2>
+                        <XYPlot height={300} width={300}>
+                            <LineSeries data={install_duration_data} color="red" />
+                        </XYPlot>
+
+                        <h2> After install memory usage </h2>
+                        <XYPlot height={300} width={300}>
+                            <LineSeries data={install_memory_data} color="red" />
+                        </XYPlot>
+
+                        <h2> Application size </h2>
+                        <XYPlot height={300} width={300}>
+                            <LineSeries data={app_size_data} color="red" />
+                        </XYPlot>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div>
+                    No performance data found!
+                    <br/>
+                    <div>
+                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                    </div>
+                </div>
+            )
+        ) : (
+            <Unauthorized/>
         )
     )
 }

@@ -2,7 +2,9 @@ import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import Workspace from "../Components/Workspace";
+import Unauthorized from '../Components/Unauthorized';
 
 export default function WorkspaceScreen(props){
 
@@ -53,27 +55,31 @@ export default function WorkspaceScreen(props){
     };
 
     return(
-        workspace != null && workspace.app_bundle_id == workspaceId ? (
-            <div>
-                <main>
-                    <div className="row center">
-                        <div>
-                            <Workspace key={workspace.app_bundle_id} workspace={workspace}></Workspace>
-                            <h3><Link to={`/jobs/${workspace.app_bundle_id}`}> Jobs </Link></h3>
-                            <h3><Link to={`/trends/${workspace.app_bundle_id}`}>Performance Graphs</Link></h3>
-                            <br/><br/>
-                        </div>
-                    </div>
-                </main>
+        token != null ? (
+            workspace != null && workspace.app_bundle_id == workspaceId ? (
                 <div>
+                    <main>
+                        <div className="row center">
+                            <div>
+                                <Workspace key={workspace.app_bundle_id} workspace={workspace}></Workspace>
+                                <h3><Link to={`/jobs/${workspace.app_bundle_id}`}> Jobs </Link></h3>
+                                <h3><Link to={`/trends/${workspace.app_bundle_id}`}>Performance Graphs</Link></h3>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </main>
+                    <div>
+                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                    </div>
+                </div>
+            ) : (
+                <div className="TODO">
+                    Loading... Please <button className="primary" onClick={retry}>RETRY</button>...
                     {errorMessage && (<p className="error"> {errorMessage} </p>)}
                 </div>
-            </div>
+            )
         ) : (
-            <div className="TODO">
-                Loading... Please <button className="primary" onClick={retry}>RETRY</button>...
-                {errorMessage && (<p className="error"> {errorMessage} </p>)}
-            </div>
+            <Unauthorized/>
         )
     )
 }

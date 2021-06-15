@@ -2,7 +2,9 @@ import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import Jobs from "../Components/Jobs";
+import Unauthorized from '../Components/Unauthorized';
 
 export default function JobsScreen(props){
 
@@ -84,45 +86,49 @@ export default function JobsScreen(props){
     };
 
     return(
-        jobs.length > 0 ? (
-            <div>
-                <div className="TODO">
-                    <h3><Link to={`/workspace/${workspaceId}`}> Back to {workspaceId} workspace </Link></h3>
-                    <br/><br/>
-                </div>
-                <main>
-                    <div className="row center">
-                        {
-                            jobs.map(
-                                job => (
-                                    <div>
-                                        <Jobs key={job.id} job={job}></Jobs>
-                                        <button onClick={(e) => deleteJob(job.id, e)}> Delete this job </button>
-                                        <br/><br/><br/><br/>
-                                    </div>
+        token != null ? (
+            jobs.length > 0 ? (
+                <div>
+                    <div className="TODO">
+                        <h3><Link to={`/workspace/${workspaceId}`}> Back to {workspaceId} workspace </Link></h3>
+                        <br/><br/>
+                    </div>
+                    <main>
+                        <div className="row center">
+                            {
+                                jobs.map(
+                                    job => (
+                                        <div>
+                                            <Jobs key={job.id} job={job}></Jobs>
+                                            <button onClick={(e) => deleteJob(job.id, e)}> Delete this job </button>
+                                            <br/><br/><br/><br/>
+                                        </div>
+                                    )
                                 )
-                            )
-                        }
-                    </div>
-                    <div>
-                        <button className="primary" onClick={runJob}> Run new job </button>
-                    </div>
+                            }
+                        </div>
+                        <div>
+                            <button className="primary" onClick={runJob}> Run new job </button>
+                        </div>
+                        <div>
+                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                        </div>
+                    </main>
+                </div>
+            ) : (
+                <div className="TODO">
+                    <h3><Link to={`/workspace/${workspaceId}`}> {workspaceId} </Link></h3>
+                    Loading or no jobs found. Please <button className="primary" onClick={retry}>RETRY</button>...
+                    <br/><br/><br/>
+                    <button className="primary" onClick={runJob}> Run new job </button>
+                    <br/><br/><br/>
                     <div>
                         {errorMessage && (<p className="error"> {errorMessage} </p>)}
                     </div>
-                </main>
-            </div>
-        ) : (
-            <div className="TODO">
-                <h3><Link to={`/workspace/${workspaceId}`}> {workspaceId} </Link></h3>
-                Loading or no jobs found. Please <button className="primary" onClick={retry}>RETRY</button>...
-                <br/><br/><br/>
-                <button className="primary" onClick={runJob}> Run new job </button>
-                <br/><br/><br/>
-                <div>
-                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
                 </div>
-            </div>
+            )
+        ) : (
+            <Unauthorized/>
         )
     )
 }

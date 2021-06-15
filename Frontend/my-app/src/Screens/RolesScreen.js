@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
+import Unauthorized from '../Components/Unauthorized';
+
 export default function JobCreateScreen(props) {
 
     const userId = props.match.params.userId;
@@ -52,34 +54,38 @@ export default function JobCreateScreen(props) {
     };
 
     return(
-        <div>
-            <div className="TODO">
-                <h3><Link to={`/users`}> Back to Users </Link></h3>
-                <br/>
-            </div>
-            <main>
-                <form className="form" onSubmit={submitHandler}>
-                    <div className="header-log">
-                        <h1>Change role for user {userId}</h1>
-                    </div>
-                    <div>
-                        <label htmlFor="roleId" className="labels">
-                            Role ID (1 - ADMIN, 2 - MANAGER, 3 - GUEST)
-                        </label>
-                        <br />
-                        <input type="text" id="roleId" required
-                            onChange={e => setRoleId(e.target.value)}></input>
-                    </div>
-                    <div>
-                        <label />
-                        <button className="primary" type="submit">Set role</button>
-                    </div>
-                </form>
-                <div>
-                    <br/><br/><br/><br/>
-                    {errorMessage && (<p className="error"> {errorMessage} </p>)}
+        token != null ? (
+            <div>
+                <div className="TODO">
+                    <h3><Link to={`/users`}> Back to Users </Link></h3>
+                    <br/>
                 </div>
-            </main>
-        </div>
+                <main>
+                    <form className="form" onSubmit={submitHandler}>
+                        <div className="header-log">
+                            <h1>Change role for user {userId}</h1>
+                        </div>
+                        <div>
+                            <label htmlFor="roleId" className="labels">
+                                Role ID (1 - ADMIN, 2 - MANAGER, 3 - GUEST)
+                            </label>
+                            <br />
+                            <input type="text" id="roleId" required
+                                onChange={e => setRoleId(e.target.value)}></input>
+                        </div>
+                        <div>
+                            <label />
+                            <button className="primary" type="submit">Set role</button>
+                        </div>
+                    </form>
+                    <div>
+                        <br/><br/><br/><br/>
+                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                    </div>
+                </main>
+            </div>
+        ) : (
+            <Unauthorized/>
+        )
     )
 }
