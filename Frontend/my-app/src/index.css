@@ -34,6 +34,7 @@ body {
     background-image: url("https://i.pinimg.com/originals/e4/d5/7f/e4d57f025c97334515d6a9d6c4d28b84.png");
     background-repeat: no-repeat, repeat;
     background-size: cover; /* Resize the background image to cover the entire container */
+    min-height: 100vh;
 }
 
 small {
@@ -281,13 +282,16 @@ h3 {
 
 
 /* BASIC */
-
 html {
 }
 
 body {
   font-family: "Poppins", sans-serif;
-  height: 100vh;
+  height: 100%;
+}
+
+body > * {
+  flex-shrink: 0;
 }
 
 a {

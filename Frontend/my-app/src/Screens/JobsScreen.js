@@ -6,6 +6,8 @@ import { Link, useHistory } from 'react-router-dom';
 import Jobs from "../Components/Jobs";
 import Unauthorized from '../Components/Unauthorized';
 
+import { VscLoading } from 'react-icons/vsc';
+
 export default function JobsScreen(props){
 
     const workspaceId = props.match.params.workspaceId;
@@ -116,15 +118,23 @@ export default function JobsScreen(props){
                     </main>
                 </div>
             ) : (
-                <div className="TODO">
-                    <h3><Link to={`/workspace/${workspaceId}`}> {workspaceId} </Link></h3>
-                    Loading or no jobs found. Please <button className="primary" onClick={retry}>RETRY</button>...
-                    <br/><br/><br/>
-                    <button className="primary" onClick={runJob}> Run new job </button>
-                    <br/><br/><br/>
-                    <div>
-                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                <div class="page">
+                  <div class="d-flex justify-content-center">
+                    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                      <div class="col-lg-12 d-flex justify-content-center">
+                        <p class="lead">
+                            <h2>Loading or no jobs found for <Link to={`/workspace/${workspaceId}`}> {workspaceId} </Link> application.</h2>
+                        </p>
+                      </div>
                     </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                      <button class="btn btn-danger btn-lg px-4" onClick={retry}> <VscLoading/> Loading... RETRY </button>
+                  </div>
+                  <br/>
+                  <div class="d-flex justify-content-center">
+                      <button class="btn btn-outline-secondary btn-lg px-4" onClick={runJob}> New job </button>
+                  </div>
                 </div>
             )
         ) : (

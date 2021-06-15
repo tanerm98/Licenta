@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Workspace from "../Components/Workspace";
 import Unauthorized from '../Components/Unauthorized';
+import { Table } from 'react-bootstrap';
 
 export default function WorkspacesScreen(){
 
@@ -81,37 +82,56 @@ export default function WorkspacesScreen(){
     return(
         token != null ? (
             workspaces.length > 0 ? (
-                <div>
-                    <main>
-                        <div className="row center">
-                            {
-                                workspaces.map(
-                                    workspace => (
-                                        <div>
-                                            <Workspace key={workspace.app_bundle_id} workspace={workspace}></Workspace>
-                                            <button onClick={(e) => deleteWorkspace(workspace.app_bundle_id, e)}> Delete this workspace </button>
-                                            <br/><br/><br/><br/>
-                                        </div>
-                                    )
-                                )
-                            }
+                <div class="page">
+                    <div class="container col-xxl-8 px-1 py-1">
+                        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                          <h1 class="display-5 fw-bold lh-1 mb-3 justify-content-md-center">
+                            View Workspaces for All Applications. Create New Workspaces
+                          </h1>
+                          <div class="col-lg-12">
+                            <br/><br/><br/><br/>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>BUNDLE ID</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>REPOSITORY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        workspaces.map(
+                                            workspace => (
+                                                <Workspace key={workspace.app_bundle_id} workspace={workspace}></Workspace>
+                                            )
+                                        )
+                                    }
+                                </tbody>
+                            </Table>
+                            <br/><br/><br/><br/>
+                          </div>
                         </div>
-                        <div>
-                            <button className="primary" onClick={createWorkspace}> Create new workspace </button>
-                        </div>
-                        <div>
-                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
-                        </div>
-                    </main>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-secondary btn-lg px-4" onClick={createWorkspace}> New Workspace </button>
+                    </div>
                 </div>
             ) : (
-                <div>
-                    No workspaces found. :D
-                    <br/>
-                    <button className="primary" onClick={createWorkspace}> Create new workspace </button>
-                    <br/>
-                    <div>
-                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                <div class="page">
+                    <div class="container col-xxl-8 px-1 py-1">
+                        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                          <h1 class="display-5 fw-bold lh-1 mb-3 justify-content-md-center">
+                            View Workspaces for All Applications. Create New Workspaces
+                          </h1>
+                          <div class="col-lg-12">
+                            <p class="lead">
+                                <h2>No workspaces found</h2>
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-secondary btn-lg px-4" onClick={createWorkspace}> New Workspace </button>
                     </div>
                 </div>
             )

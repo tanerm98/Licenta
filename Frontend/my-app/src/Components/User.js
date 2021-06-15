@@ -13,10 +13,10 @@ export default function User(props){
     }
 
     return (
-        <div key={user.id} className="card">
-            <div className="card-body">
-                <h3> ID: {user.id} | USERNAME: <Link to={`/setRole/${user.id}`}> {user.username} </Link> | ROLE: {roleName}</h3>
-            </div>
-        </div>
+        <tr>
+            <td>{user.id}</td>
+            <td><Link to={`/setRole/${user.id}`}> {user.username} </Link></td>
+            <td>{roleName}</td>
+        </tr>
     )
 }

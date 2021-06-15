@@ -6,6 +6,8 @@ import { Link, useHistory } from 'react-router-dom';
 import User from "../Components/User";
 import Unauthorized from '../Components/Unauthorized';
 
+import { Table } from 'react-bootstrap';
+
 export default function WorkspacesScreen(){
 
     const history = useHistory();
@@ -52,29 +54,36 @@ export default function WorkspacesScreen(){
     return(
         token != null ? (
             users.length > 0 ? (
-                <div class="container col-xxl-8 px-1 py-1">
+                <div class="page">
+                    <div class="container col-xxl-8 px-1 py-1">
                     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                       <h1 class="display-5 fw-bold lh-1 mb-3 justify-content-md-center">
                         View Registered Users and Change Account Roles (ADMIN only)
                       </h1>
                       <div class="col-lg-12">
                         <br/>
-                        <p class="lead">
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>USERNAME</th>
+                                    <th>ROLE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             {
                                 users.map(
                                     user => (
-                                        <div>
-                                            <User key={user.id} user={user}></User>
-                                            <br/><br/>
-                                        </div>
+                                        <User key={user.id} user={user}></User>
                                     )
                                 )
                             }
-                            <br/>
-                        </p>
+                            </tbody>
+                        </Table>
                       </div>
                     </div>
                   </div>
+              </div>
             ) : (
                 <div>
                     No users found!
@@ -89,21 +98,3 @@ export default function WorkspacesScreen(){
         )
     )
 }
-
-//<div>
-//    <div className="row center">
-//        {
-//            users.map(
-//                user => (
-//                    <div>
-//                        <User key={user.id} user={user}></User>
-//                        <br/><br/>
-//                    </div>
-//                )
-//            )
-//        }
-//    </div>
-//    <div>
-//        {errorMessage && (<p className="error"> {errorMessage} </p>)}
-//    </div>
-//</div>
