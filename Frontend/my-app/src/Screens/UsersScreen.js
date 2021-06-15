@@ -50,27 +50,31 @@ export default function WorkspacesScreen(){
     },[users, token]);
 
     return(
-        (token != null && authorized == 1) ? (
+        token != null ? (
             users.length > 0 ? (
-                <div>
-                    <main>
-                        <div className="row center">
+                <div class="container col-xxl-8 px-1 py-1">
+                    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                      <h1 class="display-5 fw-bold lh-1 mb-3 justify-content-md-center">
+                        View Registered Users and Change Account Roles (ADMIN only)
+                      </h1>
+                      <div class="col-lg-12">
+                        <br/>
+                        <p class="lead">
                             {
                                 users.map(
                                     user => (
                                         <div>
                                             <User key={user.id} user={user}></User>
-                                            <br/><br/><br/><br/>
+                                            <br/><br/>
                                         </div>
                                     )
                                 )
                             }
-                        </div>
-                        <div>
-                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
-                        </div>
-                    </main>
-                </div>
+                            <br/>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
             ) : (
                 <div>
                     No users found!
@@ -85,3 +89,21 @@ export default function WorkspacesScreen(){
         )
     )
 }
+
+//<div>
+//    <div className="row center">
+//        {
+//            users.map(
+//                user => (
+//                    <div>
+//                        <User key={user.id} user={user}></User>
+//                        <br/><br/>
+//                    </div>
+//                )
+//            )
+//        }
+//    </div>
+//    <div>
+//        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+//    </div>
+//</div>
