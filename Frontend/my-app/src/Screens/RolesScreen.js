@@ -5,6 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Unauthorized from '../Components/Unauthorized';
 
+import { Form, Col } from 'react-bootstrap';
+
 export default function JobCreateScreen(props) {
 
     const userId = props.match.params.userId;
@@ -12,7 +14,7 @@ export default function JobCreateScreen(props) {
     const history = useHistory();
     const token = localStorage.getItem("token");
 
-    const [roleId, setRoleId] = useState('');
+    const [roleId, setRoleId] = useState('1');
     const [errorMessage, setErrorMessage] = useState('');
 
     const submitHandler = (e) => {
@@ -55,34 +57,40 @@ export default function JobCreateScreen(props) {
 
     return(
         token != null ? (
-            <div>
-                <div className="TODO">
-                    <h3><Link to={`/users`}> Back to Users </Link></h3>
-                    <br/>
-                </div>
-                <main>
-                    <form className="form" onSubmit={submitHandler}>
-                        <div className="header-log">
-                            <h1>Change role for user {userId}</h1>
-                        </div>
-                        <div>
-                            <label htmlFor="roleId" className="labels">
-                                Role ID (1 - ADMIN, 2 - MANAGER, 3 - GUEST)
-                            </label>
-                            <br />
-                            <input type="text" id="roleId" required
-                                onChange={e => setRoleId(e.target.value)}></input>
-                        </div>
-                        <div>
-                            <label />
-                            <button className="primary" type="submit">Set role</button>
-                        </div>
-                    </form>
-                    <div>
-                        <br/><br/><br/><br/>
-                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+            <div class="page2">
+                <div class="wrapper fadeInDown">
+                  <div id="formContent3">
+
+                    <div class="fadeIn first">
+                        <br/>
+                        <img src="https://icon-library.com/images/role-icon/role-icon-1.jpg" id="icon" alt="User Icon" />
                     </div>
-                </main>
+                    <br/>
+                    <form onSubmit={submitHandler}>
+                      <div className="header-log">
+                        <h1> Change Role for User ID {userId} </h1>
+                        <h4><Link to={`/users`}>Users</Link></h4>
+                        <br/><br/>
+                      </div>
+
+                      <Form.Group as={Col} controlId="device" class="fadeIn second">
+                        <Form.Label class="fadeIn second label">Role ID (1 - ADMIN, 2 - MANAGER, 3 - GUEST)</Form.Label>
+                        <Form.Control as="select" onChange={e => setRoleId(e.target.value)}>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                        </Form.Control>
+                      </Form.Group>
+
+                      <br/><br/><br/>
+                      <div>
+                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                      </div>
+                      <input type="submit" class="fadeIn fourth" value="Set Role"></input>
+                    </form>
+
+                  </div>
+                </div>
             </div>
         ) : (
             <Unauthorized/>
