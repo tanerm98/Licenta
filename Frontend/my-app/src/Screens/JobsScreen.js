@@ -7,6 +7,7 @@ import Jobs from "../Components/Jobs";
 import Unauthorized from '../Components/Unauthorized';
 
 import { VscLoading } from 'react-icons/vsc';
+import { Table } from 'react-bootstrap';
 
 export default function JobsScreen(props){
 
@@ -62,60 +63,43 @@ export default function JobsScreen(props){
         window.location.reload();
     };
 
-    const deleteJob = (jobId, e) => {
-        e.preventDefault();
-        axios.delete(
-            `http://localhost:3002/api/v1/jobs/id/${jobId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        )
-        .then(
-            response => {
-                console.log(response.data)
-                console.log(response.status)
-                localStorage.setItem("token", response.data.response.token)
-                setErrorMessage('Delete Successful!')
-            },
-        )
-        .catch(
-            error => {
-                console.error(error)
-            },
-        );
-    };
-
     return(
         token != null ? (
             jobs.length > 0 ? (
-                <div>
-                    <div className="TODO">
-                        <h3><Link to={`/workspace/${workspaceId}`}> Back to {workspaceId} workspace </Link></h3>
-                        <br/><br/>
+                <div class="page">
+                    <div class="container col-xxl-8 px-1 py-1">
+                        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                          <h1 class="display-5 fw-bold lh-1 mb-3 justify-content-md-center">
+                            View Jobs for Application <Link to={`/workspace/${workspaceId}`}>{workspaceId}</Link>. Run New Tests
+                          </h1>
+                          <div class="col-lg-12">
+                            <br/><br/><br/><br/>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>ID</th>
+                                        <th>PR</th>
+                                        <th>SUMMARY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        jobs.map(
+                                            job => (
+                                                <Jobs key={job.id} job={job}></Jobs>
+                                            )
+                                        )
+                                    }
+                                </tbody>
+                            </Table>
+                            <br/><br/><br/><br/>
+                          </div>
+                        </div>
                     </div>
-                    <main>
-                        <div className="row center">
-                            {
-                                jobs.map(
-                                    job => (
-                                        <div>
-                                            <Jobs key={job.id} job={job}></Jobs>
-                                            <button onClick={(e) => deleteJob(job.id, e)}> Delete this job </button>
-                                            <br/><br/><br/><br/>
-                                        </div>
-                                    )
-                                )
-                            }
-                        </div>
-                        <div>
-                            <button className="primary" onClick={runJob}> Run new job </button>
-                        </div>
-                        <div>
-                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
-                        </div>
-                    </main>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-secondary btn-lg px-4" onClick={runJob}> New Job </button>
+                    </div>
+                    <br/><br/><br/><br/>
                 </div>
             ) : (
                 <div class="page">
@@ -142,3 +126,32 @@ export default function JobsScreen(props){
         )
     )
 }
+
+
+//<div>
+//    <div className="TODO">
+//        <h3><Link to={`/workspace/${workspaceId}`}> Back to {workspaceId} workspace </Link></h3>
+//        <br/><br/>
+//    </div>
+//    <main>
+//        <div className="row center">
+//            {
+//                jobs.map(
+//                    job => (
+//                        <div>
+//                            <Jobs key={job.id} job={job}></Jobs>
+//                            <button onClick={(e) => deleteJob(job.id, e)}> Delete this job </button>
+//                            <br/><br/><br/><br/>
+//                        </div>
+//                    )
+//                )
+//            }
+//        </div>
+//        <div>
+//            <button className="primary" onClick={runJob}> Run new job </button>
+//        </div>
+//        <div>
+//            {errorMessage && (<p className="error"> {errorMessage} </p>)}
+//        </div>
+//    </main>
+//</div>

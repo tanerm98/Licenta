@@ -115,6 +115,7 @@ export default function WorkspacesScreen(){
                     <div class="d-flex justify-content-center">
                         <button class="btn btn-outline-secondary btn-lg px-4" onClick={createWorkspace}> New Workspace </button>
                     </div>
+                    <br/><br/><br/><br/>
                 </div>
             ) : (
                 <div class="page">

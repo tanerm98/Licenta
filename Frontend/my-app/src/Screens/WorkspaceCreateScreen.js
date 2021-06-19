@@ -5,6 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Unauthorized from '../Components/Unauthorized';
 
+import { Form } from 'react-bootstrap';
+
 export default function WorkspaceCreateScreen() {
 
     const history = useHistory();
@@ -60,49 +62,34 @@ export default function WorkspaceCreateScreen() {
 
     return(
         token != null ? (
-            <div>
-                <main>
-                    <form className="form" onSubmit={submitHandler}>
-                        <div className="header-log">
-                            <h1>Create workspace</h1>
-                        </div>
-                        <div>
-                            <label htmlFor="appBundleId" className="labels">
-                                iOS Application Bundle ID
-                            </label>
-                            <br />
-                            <input type="text" id="appBundleId" required
-                                onChange={e => setAppBundleId(e.target.value)}></input>
-                        </div>
-                        <br />
-                        <div>
-                            <label htmlFor="description" className="labels">
-                                Description
-                            </label>
-                            <br />
-                            <input type="text" id="description" required
-                                onChange={e => setDescription(e.target.value)}></input>
-                        </div>
-                        <br />
-                        <div>
-                            <label htmlFor="repoLink" className="labels">
-                                Repository Link
-                            </label>
-                            <br />
-                            <input type="text" id="repoLink" required
-                                onChange={e => setRepoLink(e.target.value)}></input>
-                        </div>
-                        <br />
-                        <div>
-                            {errorMessage && (<p className="error"> {errorMessage} </p>)}
-                        </div>
-                        <br />
-                        <div>
-                            <label />
-                            <button className="primary" type="submit">Create</button>
-                        </div>
+            <div class="page2">
+                <div class="wrapper fadeInDown">
+                  <div id="formContent">
+
+                    <div class="fadeIn first">
+                        <br/>
+                        <img src="https://lh3.googleusercontent.com/proxy/tkOSukrKZCsPl_wAg5JLIOiaeLApfdsYgSBUYK7lwvNZvdk5_PPP9kerYIlxRMUFY-3ehxTvpTSFxuKb-6fkCHyOUSS5i_1clyNC-cZ7lbZen2o" id="icon" alt="User Icon" />
+                    </div>
+                    <br/>
+                    <form onSubmit={submitHandler}>
+                      <div className="header-log">
+                        <h1> Create New Workspace </h1>
+                        <br/><br/>
+                      </div>
+                      <input type="text" class="fadeIn second" id="appBundleId" placeholder="App Bundle ID" required onChange={e => setAppBundleId(e.target.value)}></input>
+                      <input type="textarea" class="fadeIn second" id="appBundleId" placeholder="Short Description" required onChange={e => setDescription(e.target.value)}></input>
+                      <input type="text" class="fadeIn second" id="appBundleId" placeholder="Repository Link" required onChange={e => setRepoLink(e.target.value)}></input>
+                      <br/><br/><br/>
+                      <div>
+                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                      </div>
+                      <input type="submit" class="fadeIn fourth" value="Create"></input>
                     </form>
-                </main>
+
+
+
+                  </div>
+                </div>
             </div>
         ) : (
             <Unauthorized/>

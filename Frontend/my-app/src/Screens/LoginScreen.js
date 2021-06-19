@@ -45,9 +45,9 @@ export default function LoginScreen() {
     };
 
     return(
-        <div>
+        <div class="page">
             <div class="wrapper fadeInDown">
-              <div id="formContent">
+              <div id="formContent2">
 
                 <div class="fadeIn first">
                   <img src="https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png" id="icon" alt="User Icon" />

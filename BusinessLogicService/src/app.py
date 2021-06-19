@@ -64,9 +64,11 @@ def run_tests(bundle_id):
                 command += ["--app_path", str(payload["app_path"])]
 
             if "device" in payload:
-                command += ["--device", str(payload["device"])]
+                if str(payload["device"]) != "" and str(payload["device"]) != "All":
+                    command += ["--device", str(payload["device"])]
             if "launch_type" in payload:
-                command += ["--launch_type", str(payload["launch_type"])]
+                if str(payload["launch_type"]) != "" and str(payload["launch_type"]) != "All":
+                    command += ["--launch_type", str(payload["launch_type"])]
             if "launch_nr" in payload:
                 try:
                     command += ["--launch_nr", str(int(payload["launch_nr"]))]
