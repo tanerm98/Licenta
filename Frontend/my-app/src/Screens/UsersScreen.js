@@ -8,6 +8,8 @@ import Unauthorized from '../Components/Unauthorized';
 
 import { Table } from 'react-bootstrap';
 
+import { VscLoading } from 'react-icons/vsc';
+
 export default function WorkspacesScreen(){
 
     const history = useHistory();
@@ -38,7 +40,6 @@ export default function WorkspacesScreen(){
                 error => {
                     console.error(error)
                     if ((error.response.status >= 400) && (error.response.status < 500)) {
-                        setUsers([])
                         setErrorMessage('You are not authorized for this action!')
                     } else {
                         setErrorMessage('Error retrieving users!')
@@ -50,6 +51,11 @@ export default function WorkspacesScreen(){
             setErrorMessage('You are not authorized for this action!')
         }
     },[users, token]);
+
+    const retry = (e) => {
+        e.preventDefault();
+        window.location.reload();
+    };
 
     return(
         token != null ? (
@@ -85,12 +91,20 @@ export default function WorkspacesScreen(){
                   </div>
               </div>
             ) : (
-                <div>
-                    No users found!
-                    <br/><br/>
-                    <div>
-                        {errorMessage && (<p className="error"> {errorMessage} </p>)}
+                <div class="page">
+                  <div class="d-flex justify-content-center">
+                    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                      <div class="col-lg-12 d-flex justify-content-center">
+                        <p class="lead">
+                            <h2>Loading or no data found.</h2>
+                        </p>
+                      </div>
                     </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                      <button class="btn btn-danger btn-lg px-4" onClick={retry}> <VscLoading/> Loading... RETRY </button>
+                  </div>
+                  <br/>
                 </div>
             )
         ) : (
