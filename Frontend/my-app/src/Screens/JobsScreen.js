@@ -126,32 +126,3 @@ export default function JobsScreen(props){
         )
     )
 }
-
-
-//<div>
-//    <div className="TODO">
-//        <h3><Link to={`/workspace/${workspaceId}`}> Back to {workspaceId} workspace </Link></h3>
-//        <br/><br/>
-//    </div>
-//    <main>
-//        <div className="row center">
-//            {
-//                jobs.map(
-//                    job => (
-//                        <div>
-//                            <Jobs key={job.id} job={job}></Jobs>
-//                            <button onClick={(e) => deleteJob(job.id, e)}> Delete this job </button>
-//                            <br/><br/><br/><br/>
-//                        </div>
-//                    )
-//                )
-//            }
-//        </div>
-//        <div>
-//            <button className="primary" onClick={runJob}> Run new job </button>
-//        </div>
-//        <div>
-//            {errorMessage && (<p className="error"> {errorMessage} </p>)}
-//        </div>
-//    </main>
-//</div>

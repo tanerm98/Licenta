@@ -629,3 +629,7 @@ input[type=password]:placeholder {
 .btn-new {
     background-color: #2A3F54;
 }
+
+.graph {
+    padding: 10px;
+}
