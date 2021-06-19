@@ -55,8 +55,8 @@ export default function Job(props){
                     </thead>
                     <tbody>
                         {job.summary.split(/[->\n]+/).map((i,key) => {
-                            if ((key != 0) && (key != 4) && (i != "\\n")) {
-                                if (!i.includes("--")){
+                            if ((key != 0) && (i != "\\n")) {
+                                if (!i.includes("--")) {
                                     var v1 = i.replace(">", "")
                                     if (v1.includes("APP SIZE")) {
                                         var v7 = v1.replace("APP SIZE:", "")
@@ -109,7 +109,7 @@ export default function Job(props){
                     </thead>
                     <tbody>
                         {job.summary.split(/[->\n]+/).map((i,key) => {
-                            if ((key != 0) && (key != 4) && (i != "\\n")) {
+                            if ((key != 0) && (i != "\\n")) {
                                 if (!i.includes("--")){
                                     var v1 = i.replace(">", "")
                                     if (v1.includes("DEVICE") && v1.includes("LAUNCH TYPE")) {

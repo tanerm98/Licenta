@@ -59,7 +59,8 @@ def run_tests(bundle_id):
         logging.info("Payload: '{PAYLOAD}'".format(PAYLOAD=payload))
         if payload:
             if "file_id" in payload:
-                command += ["--file_id", str(payload["file_id"])]
+                if str(payload["file_id"]) != "":
+                    command += ["--file_id", str(payload["file_id"])]
             if "app_path" in payload:
                 command += ["--app_path", str(payload["app_path"])]
 

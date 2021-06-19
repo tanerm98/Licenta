@@ -609,40 +609,42 @@ def create_test_summary(args, TEST_RESULTS):
         test_summary += "---------------------------------------------------------------\n"
 
         for element in TEST_RESULTS:
-            if element != LAUNCHES:
-                test_summary += "> {KEY}: {VALUE}".format(KEY=element, VALUE=TEST_RESULTS[element])
-                if element == INSTALL_LAUNCH_DURATION:
-                    if int(TEST_RESULTS[INSTALL_LAUNCH_DURATION]) > args.duration_limit:
-                        test_summary += "ms  :x:\n"
-                    else:
-                        test_summary += "ms  :white_check_mark:\n"
+            if element is not None:
+                if element != LAUNCHES:
+                    test_summary += "> {KEY}: {VALUE}".format(KEY=element, VALUE=TEST_RESULTS[element])
+                    if element == INSTALL_LAUNCH_DURATION and TEST_RESULTS[INSTALL_LAUNCH_DURATION] is not None:
+                        if int(TEST_RESULTS[INSTALL_LAUNCH_DURATION]) > args.duration_limit:
+                            test_summary += "ms  :x:\n"
+                        else:
+                            test_summary += "ms  :white_check_mark:\n"
 
-                if element == INSTALL_MEMORY_USAGE:
-                    if int(TEST_RESULTS[INSTALL_MEMORY_USAGE]) > args.memory_limit:
-                        test_summary += "MB  :x:\n"
-                    else:
-                        test_summary += "MB  :white_check_mark:\n"
+                    if element == INSTALL_MEMORY_USAGE and TEST_RESULTS[INSTALL_MEMORY_USAGE] is not None:
+                        if int(TEST_RESULTS[INSTALL_MEMORY_USAGE]) > args.memory_limit:
+                            test_summary += "MB  :x:\n"
+                        else:
+                            test_summary += "MB  :white_check_mark:\n"
 
-                if element == APP_SIZE:
-                    if int(TEST_RESULTS[APP_SIZE]) > args.size_limit:
-                        test_summary += "MB  :x:\n"
-                    else:
-                        test_summary += "MB  :white_check_mark:\n"
+                    if element == APP_SIZE and TEST_RESULTS[APP_SIZE] is not None:
+                        if int(TEST_RESULTS[APP_SIZE]) > args.size_limit:
+                            test_summary += "MB  :x:\n"
+                        else:
+                            test_summary += "MB  :white_check_mark:\n"
         test_summary += "---------------------------------------------------------------\n"
 
         for element in TEST_RESULTS[LAUNCHES]:
-            test_summary += "> DEVICE: {DEVICE} | LAUNCH TYPE: {LAUNCH_TYPE} | ".format(DEVICE=element[DEVICE], LAUNCH_TYPE=element[LAUNCH_TYPE])
-            test_summary += "DURATION: {DURATION}ms ".format(DURATION=element[LAUNCH_DURATION])
-            if int(element[LAUNCH_DURATION]) > args.duration_limit:
-                test_summary += " :x: | "
-            else:
-                test_summary += " :white_check_mark: | "
+            if element is not None and None not in [element[DEVICE], element[LAUNCH_TYPE], element[LAUNCH_DURATION], element[MEMORY_USAGE]]:
+                test_summary += "> DEVICE: {DEVICE} | LAUNCH TYPE: {LAUNCH_TYPE} | ".format(DEVICE=element[DEVICE], LAUNCH_TYPE=element[LAUNCH_TYPE])
+                test_summary += "DURATION: {DURATION}ms ".format(DURATION=element[LAUNCH_DURATION])
+                if int(element[LAUNCH_DURATION]) > args.duration_limit:
+                    test_summary += " :x: | "
+                else:
+                    test_summary += " :white_check_mark: | "
 
-            test_summary += "MEMORY USAGE: {MEMORY_USAGE}MB ".format(MEMORY_USAGE=element[MEMORY_USAGE])
-            if int(element[MEMORY_USAGE]) > args.memory_limit:
-                test_summary += " :x:\n"
-            else:
-                test_summary += " :white_check_mark:\n"
+                test_summary += "MEMORY USAGE: {MEMORY_USAGE}MB ".format(MEMORY_USAGE=element[MEMORY_USAGE])
+                if int(element[MEMORY_USAGE]) > args.memory_limit:
+                    test_summary += " :x:\n"
+                else:
+                    test_summary += " :white_check_mark:\n"
         test_summary += "----------------------------------------------------\n"
 
     except Exception as e:
