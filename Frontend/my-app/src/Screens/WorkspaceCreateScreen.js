@@ -68,7 +68,7 @@ export default function WorkspaceCreateScreen() {
 
                     <div class="fadeIn first">
                         <br/>
-                        <img src="https://lh3.googleusercontent.com/proxy/tkOSukrKZCsPl_wAg5JLIOiaeLApfdsYgSBUYK7lwvNZvdk5_PPP9kerYIlxRMUFY-3ehxTvpTSFxuKb-6fkCHyOUSS5i_1clyNC-cZ7lbZen2o" id="icon" alt="User Icon" />
+                        <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/project-management-34-887151.png" id="icon" alt="User Icon" />
                     </div>
                     <br/>
                     <form onSubmit={submitHandler}>

@@ -43,7 +43,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Measure iOS application performance.')
 
     # Mandatory arguments - test information
-    parser.add_argument('--device', required=False, nargs='*', choices=["iPhone 8", "iPhone 11"], default=["iPhone 8", "iPhone 11"], help='iPhone type for running the tests on')
+    parser.add_argument('--device', required=False, nargs='*', choices=["iPhone 8", "iPhone 8 Plus", "iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE", "iPhone 12 mini", "iPhone 12", "iPhone 12 Pro", "iPhone 12 Pro Max"], default=["iPhone 8", "iPhone 11", "iPhone 12"], help='iPhone type for running the tests on')
     parser.add_argument('--launch_type', required=False, nargs='*', choices=["WARM", "COLD"], default=["WARM", "COLD"], help='Tested launch type')
     parser.add_argument('--launch_nr', required=False, default=3, type=int, help='Number of launches for computing the average metric')
 

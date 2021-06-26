@@ -104,7 +104,15 @@ export default function JobCreateScreen(props) {
                             <Form.Control as="select" onChange={e => setDevice(e.target.value)}>
                               <option>All</option>
                               <option>iPhone 8</option>
+                              <option>iPhone 8 Plus</option>
                               <option>iPhone 11</option>
+                              <option>iPhone 11 Pro</option>
+                              <option>iPhone 11 Pro Max</option>
+                              <option>iPhone SE</option>
+                              <option>iPhone 12 mini</option>
+                              <option>iPhone 12</option>
+                              <option>iPhone 12 Pro</option>
+                              <option>iPhone 12 Pro Max</option>
                             </Form.Control>
                           </Form.Group>
 
