@@ -19,11 +19,9 @@ export default function UserAnalyticsScreen(){
     const [analytics, setAnalytics] = useState([]);
     const [registers, setRegisters] = useState([]);
     const [logins, setLogins] = useState([]);
-    const [jobs, setJobs] = useState([]);
 
     const [registersData, setRegistersData] = useState([]);
     const [loginsData, setLoginsData] = useState([]);
-    const [jobsData, setJobsData] = useState([]);
 
     const [data, setData] = useState([]);
 
@@ -45,7 +43,6 @@ export default function UserAnalyticsScreen(){
                     localStorage.setItem("analytics", JSON.stringify(response.data.response))
                     localStorage.setItem("registers", JSON.stringify(response.data.response.registers_data))
                     localStorage.setItem("logins", JSON.stringify(response.data.response.logins_data))
-                    localStorage.setItem("jobs", JSON.stringify(response.data.response.jobs_data))
                     setErrorMessage('Retrieve Successful!')
 
                     var data = [];
@@ -59,12 +56,6 @@ export default function UserAnalyticsScreen(){
                         data.push({x: i + 1, y: response.data.response.logins_data[i].sum});
                     }
                     localStorage.setItem("loginsData", JSON.stringify(data))
-
-                    var data = [];
-                    for (var i = 0; i < response.data.response.jobs_data.length; i++) {
-                        data.push({x: i + 1, y: response.data.response.jobs_data[i].sum});
-                    }
-                    localStorage.setItem("jobsData", JSON.stringify(data))
                 },
             )
             .catch(
@@ -80,7 +71,6 @@ export default function UserAnalyticsScreen(){
             );
             setRegistersData(JSON.parse(localStorage.getItem("registersData")));
             setLoginsData(JSON.parse(localStorage.getItem("loginsData")));
-            setJobsData(JSON.parse(localStorage.getItem("jobsData")));
 
         } else {
             setErrorMessage('You are not authorized for this action!')
@@ -130,22 +120,6 @@ export default function UserAnalyticsScreen(){
                                         <YAxis title="USERS LOGGED IN" />
                                         <VerticalBarSeries
                                             data={loginsData}
-                                            style={{stroke: 'violet', strokeWidth: 3}}
-                                        />
-                                    </XYPlot>
-                                </div>
-                                <br/><br/><br/><br/>
-                                <div className="graph">
-                                    <h3>JOBS RUN BY USERS - average per day</h3>
-                                    <XYPlot
-                                        width={1200}
-                                        height={300}>
-                                        <VerticalGridLines />
-                                        <HorizontalGridLines />
-                                        <XAxis title="PERIOD OF TIME (last days, from past to present)" />
-                                        <YAxis title="JOBS RUN BY USERS" />
-                                        <VerticalBarSeries
-                                            data={jobsData}
                                             style={{stroke: 'violet', strokeWidth: 3}}
                                         />
                                     </XYPlot>

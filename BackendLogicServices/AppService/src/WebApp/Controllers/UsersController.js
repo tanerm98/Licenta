@@ -19,7 +19,6 @@ Router.get('/analytics/', AuthorizationFilter.authorizeRoles(RoleConstants.ADMIN
 
     const registers_data = await UsersRepository.getUserRegisters(userDataBody.limit)
     const logins_data = await UsersRepository.getUserLogin(userDataBody.limit)
-    const jobs_data = await UsersRepository.getRunJobs(userDataBody.limit)
 
     if (!registers_data) {
         throw new ServerError(`User analytics data does not exist!`, 404);

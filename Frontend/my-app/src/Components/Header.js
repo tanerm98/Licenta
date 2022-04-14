@@ -16,7 +16,7 @@ const Header = () => {
           </Navbar.Collapse>
           <Navbar.Brand href="#workspaces">
             <div class="navbar-text">
-                <CgPerformance/> iOS Performance Monitor
+                <CgPerformance/> Service Connect
             </div>
           </Navbar.Brand>
           <Navbar.Toggle />

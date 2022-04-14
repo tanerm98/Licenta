@@ -16,10 +16,10 @@ const Footer = () => {
                              <h6 class="mb-3 mb-lg-4 bold-text "><MdHttp/><b> REST API</b></h6>
                          </div>
                          <div class="col-xl-2 col-md-4 col-sm-4 col-12 my-auto mx-auto a">
-                             <h6 class="mb-3 mb-lg-4 bold-text "><AiOutlineFundProjectionScreen/><b> Bachelor's Degree Project</b></h6>
+                             <h6 class="mb-3 mb-lg-4 bold-text "><AiOutlineFundProjectionScreen/><b> EAIP Project</b></h6>
                          </div>
                          <div class="col-xl-2 col-md-4 col-sm-4 col-12">
-                             <h6 class="mb-3 mb-lg-4 bold-text "><FaUserGraduate/><b>Mustafa Taner</b></h6>
+                             <h6 class="mb-3 mb-lg-4 bold-text "><FaUserGraduate/><b>Service Connect</b></h6>
                          </div>
                      </div>
                  </div>

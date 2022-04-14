@@ -1,8 +1,0 @@
-Performance Metrics of Fitbit.Concentration Application Tested from this PR
----------------------------------------------------------------
-> APP SIZE: 1MB  :white_check_mark:
-> FIRST LAUNCH AFTER INSTALL - DURATION: 1910ms  :white_check_mark:
-> FIRST LAUNCH AFTER INSTALL - MEMORY USAGE: 5.35MB  :white_check_mark:
----------------------------------------------------------------
-> DEVICE: iPhone 8 | LAUNCH TYPE: WARM | DURATION: 2576ms  :white_check_mark: | MEMORY USAGE: 5.17MB  :white_check_mark:
-----------------------------------------------------
