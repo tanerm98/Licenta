@@ -12,7 +12,7 @@ const addAsync = async (app_bundle_id, pr_id, summary) => {
 const getAllForWorkspaceAsync = async (app_bundle_id) => {
     console.info(`Getting all jobs for a bundle ID from database async...`);
 
-    return await queryAsync('SELECT * FROM jobs WHERE app_bundle_id = $1', [app_bundle_id]);
+    return await queryAsync('SELECT * FROM jobs WHERE app_bundle_id = $1 ORDER BY id', [app_bundle_id]);
 };
 
 const getByIdAsync = async (job_id) => {

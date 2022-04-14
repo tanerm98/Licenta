@@ -1,13 +1,13 @@
 {
     "LAUNCHES": [
         {
-            "DEVICE": "iPhone 11",
+            "DEVICE": "iPhone 8",
             "LAUNCH TYPE": "WARM",
-            "MEMORY USAGE": 5.36,
-            "LAUNCH DURATION": 2298
+            "MEMORY USAGE": 5.17,
+            "LAUNCH DURATION": 2576
         }
     ],
     "APP SIZE": 1,
-    "FIRST LAUNCH AFTER INSTALL - DURATION": 1561,
-    "FIRST LAUNCH AFTER INSTALL - MEMORY USAGE": 5.38
+    "FIRST LAUNCH AFTER INSTALL - DURATION": 1910,
+    "FIRST LAUNCH AFTER INSTALL - MEMORY USAGE": 5.35
 }

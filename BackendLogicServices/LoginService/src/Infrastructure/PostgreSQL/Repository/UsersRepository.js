@@ -5,7 +5,7 @@ const {
 const getAllAsync = async() => {
     console.info ('Getting all users from database');
     
-    return await queryAsync('SELECT id, username, role_id FROM users');
+    return await queryAsync('SELECT id, username, role_id FROM users ORDER BY id');
 };
 
 const addAsync = async (username, password) => {

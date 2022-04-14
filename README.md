@@ -32,7 +32,6 @@
 ### REGISTER
     Path: localhost:3003/api/v1/users/register
     Type: POST
-    Authorized roles: ADMIN, MANAGER, USER
     Body:
         {
            "username": "Guest2",
@@ -106,7 +105,6 @@
 ### SET_ROLE
     Path: localhost:3003/api/v1/users/:USER_ID/role/:ROLE_ID
     Type: PUT
-    Authorized roles: ADMIN
     Parameters: USER_ID & ROLE_ID
 
 ### GET_ROLES    

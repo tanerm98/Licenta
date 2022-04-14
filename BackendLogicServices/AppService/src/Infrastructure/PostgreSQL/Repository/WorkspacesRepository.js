@@ -12,7 +12,7 @@ const addAsync = async (app_bundle_id, description, repository_link) => {
 const getAllAsync = async () => {
     console.info(`Getting all workspaces from database async...`);
 
-    return await queryAsync('SELECT * FROM workspaces');
+    return await queryAsync('SELECT * FROM workspaces ORDER BY app_bundle_id');
 };
 
 const getByIdAsync = async (app_bundle_id) => {
