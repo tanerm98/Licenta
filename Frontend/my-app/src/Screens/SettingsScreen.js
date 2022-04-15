@@ -30,7 +30,7 @@ export default function LoginScreen() {
                     Account Settings & Admin Dashboard: Users and User Activity Analytics
                   </h1>
                   <div class="col-10 col-sm-8 col-lg-6">
-                    <img src="https://image.flaticon.com/icons/png/512/158/158704.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy"></img>
+                    <img src="https://media.istockphoto.com/vectors/vector-icons-logos-for-car-repair-and-maintenance-and-oil-change-car-vector-id1329383374?b=1&k=20&m=1329383374&s=612x612&w=0&h=AP6JWL761oHlaZWsyuGoX0QZl6hEbVx7S7UteQCxx94=" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy"></img>
                   </div>
                   <div class="col-lg-6">
                     <br/>
@@ -45,7 +45,6 @@ export default function LoginScreen() {
                             <ul>
                               <li>View number of users registered per day;</li>
                               <li>View number of active logged in users per day;</li>
-                              <li>View total number of performance tests run per day.</li>
                             </ul>
                         <br/>
                     </p>
