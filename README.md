@@ -1,8 +1,4 @@
-# Proiect Licenta - Mustafa Taner
-    Licenta
-    Performance Monitor - iOS Application Size, Memory Usage and Launch Duration - Monitor
-    
-
+# Proiect EAIP
 
 ## Steps for initializing services
     Database: cwd = Database
